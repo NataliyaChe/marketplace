@@ -1,14 +1,17 @@
 import { ItemActionTypes, ItemAction } from "../../types/item";
 import { initialState } from "./initialState";
+import { ItemState } from "../../types/item"
 
-export const itemReducer = (state = initialState, action: ItemAction) => {
+export const itemReducer = (state = initialState, action: ItemAction): ItemState => {
     switch(action.type) {
         case ItemActionTypes.FETCH_ITEMLIST:
-            return { loading: true, error: null, items: [] }
+            return { ...state, loading: true, error: null }
         case ItemActionTypes.FETCH_ITEMLIST_SUCCESS:
-            return { loading: false, error: null, items: action.payload }
+            return { ...state, loading: false, error: null, items: action.payload }
         case ItemActionTypes.FETCH_ITEMLIST_ERROR:
-            return { loading: false, error: action.payload, items: [] }
+            return { ...state, loading: false, error: action.payload, items: [] }
+        case ItemActionTypes.FETCH_ITEM:
+            return { ...state, loading: false, error: null, item: action.payload }
         default:
             return state
     }

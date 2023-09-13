@@ -1,15 +1,32 @@
 import { useEffect } from "react"
-import { fetchItems } from "../store/actions/itemAction"
+import { fetchItems, fetchItem } from "../store/actions/itemAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
+import * as ItemActionCreators from '../store/actions/itemAction'
+import {useNavigate} from 'react-router-dom';
 
 const Itemlist: React.FC = () => {
-    const {items, loading, error} = useTypedSelector(state => state.item)
-    const {fetchItems} = useActions()
+    const {items, loading, error, item} = useTypedSelector(state => state.item)
+    const {fetchItems} = useActions(ItemActionCreators)
+    const {fetchItem} = useActions(ItemActionCreators)
+    let navigate = useNavigate();
 
     useEffect(() => {
         fetchItems()
+        console.log('itemlist', items[1]); 
     }, [])
+
+    // const getItem = () => {
+    //     // fetchItem()
+    //     console.log('get item', fetchItem())
+    //     console.log('data', item);  
+    // }
+    function getItem(event: any) { 
+        const itemId = event.target.dataset.id
+        fetchItem(itemId)
+        // const targetItem = JSON.parse(localStorage.getItem('item') || "")
+        navigate(`/${itemId}`)
+    }
 
     if(loading) {
         return <h1>Is loading...</h1>
@@ -18,10 +35,15 @@ const Itemlist: React.FC = () => {
     if(error) {
         return <h1>{error}</h1>
     }
+
     return (
         <div className="itemlist">
-            {items.map(item =>
-                <div key={item.id}>{item.title}</div>)}
+            {items.map(targetItem =>
+                <div key={targetItem.id} data-id={targetItem.id} onClick={getItem}>
+                    <p>{targetItem.title}</p>
+                    <button data-id={targetItem.id} className="button">Add to cart</button>
+                </div>
+            )}
         </div>
     )
 }
