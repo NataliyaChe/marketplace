@@ -1,7 +1,12 @@
+import { Link } from 'react-router-dom';
+
 function Header () {
     return (
         <div className="header container">
-            <h1 className="title">Marketplace</h1>
+            <Link to='.' className='title'>
+                Marketplace
+            </Link>
+            <button className="button cart-button">Cart</button>
         </div>
     )
 

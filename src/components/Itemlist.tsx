@@ -39,9 +39,17 @@ const Itemlist: React.FC = () => {
     return (
         <div className="itemlist">
             {items.map(targetItem =>
-                <div key={targetItem.id} data-id={targetItem.id} onClick={getItem}>
+                <div key={targetItem.id} data-id={targetItem.id} onClick={getItem} className="item">
                     <p>{targetItem.title}</p>
-                    <button data-id={targetItem.id} className="button">Add to cart</button>
+                    <div className="flex-wrap">
+                        <button data-id={targetItem.id} className="button">
+                            More
+                        </button>
+                        <button data-id={targetItem.id} className="button">
+                            Add to cart
+                        </button>
+                    </div>
+                    
                 </div>
             )}
         </div>

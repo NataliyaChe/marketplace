@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -12,11 +13,71 @@ code {
     monospace;
 }
 
+.App {
+  padding: 0;
+}
+
 .button {
   border: 2px;
-  border-radius: 5px;
+  border-radius: 12px;
   border-color: blueviolet;
   background-color: palevioletred;
   color: white;
-  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: palevioletred;
+  color: white;
+  padding: 20px 40px 20px 40px;
+
+}
+
+.title {
+  text-decoration:none;
+  font-size: 2em;
+  color: white;
+  font-weight: 700;
+}
+
+.cart-button {
+  background-color: white;
+  color: palevioletred;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.container {
+  max-width: 1400px;
+  padding-left: 40px;
+  margin: 0 auto;
+}
+
+.main {
+  padding-top: 40px;
+}
+
+.itemlist {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  margin-bottom: 40px;
+}
+
+.item {
+  width: 21%;
+  border: 4px solid palevioletred;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.flex-wrap {
+  display: flex;
+  justify-content: space-between;
 }
