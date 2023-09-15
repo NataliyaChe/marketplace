@@ -6,15 +6,17 @@ import * as ItemActionCreators from '../store/actions/itemAction'
 import {useNavigate} from 'react-router-dom';
 
 const Itemlist: React.FC = () => {
-    const {items, loading, error, item} = useTypedSelector(state => state.item)
+    const {items, loading, error, item, currentPage, firstItem, lastItem} = useTypedSelector(state => state.item)
     const {fetchItems} = useActions(ItemActionCreators)
     const {fetchItem} = useActions(ItemActionCreators)
     let navigate = useNavigate();
 
     useEffect(() => {
-        fetchItems()
+        fetchItems(currentPage)
         console.log('itemlist', items[1]); 
-    }, [])
+    }, [currentPage])
+
+    const paginatedItems = (items.slice(firstItem, lastItem));
 
     // const getItem = () => {
     //     // fetchItem()
@@ -36,9 +38,11 @@ const Itemlist: React.FC = () => {
         return <h1>{error}</h1>
     }
 
+    console.log('state', currentPage, firstItem, lastItem);
+    
     return (
         <div className="itemlist">
-            {items.map(targetItem =>
+            {paginatedItems.map(targetItem =>
                 <div key={targetItem.id} data-id={targetItem.id} onClick={getItem} className="item">
                     <p>{targetItem.title}</p>
                     <div className="flex-wrap">

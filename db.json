@@ -39,6 +39,16 @@
             "id": 8,
             "title": "Item 8",
             "price": 103
+        },
+        { 
+            "id": 9,
+            "title": "Item 9",
+            "price": 100
+        },
+        { 
+            "id": 10,
+            "title": "Item 10",
+            "price": 130
         }
     ]
 }

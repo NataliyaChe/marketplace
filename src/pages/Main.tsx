@@ -5,7 +5,7 @@ function Main() {
     return (
         <div className="main container">
             <Itemlist />
-            {/* <Pagination /> */}
+            <Pagination />
         </div>
     )
 }

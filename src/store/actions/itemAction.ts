@@ -1,13 +1,15 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
 import { ItemActionTypes, ItemAction } from "../../types/item";
+import { Interface } from 'readline';
 
-export const fetchItems = (): any => {
+export const fetchItems = (currentPage: number, firstItem: number): any => {
     return async (dispatch: Dispatch<ItemAction>) => {
         try {
             dispatch({type: ItemActionTypes.FETCH_ITEMLIST})
-            const response = await axios.get('http://localhost:3004/items')
+            const response = await axios.get(`http://localhost:3004/items?limit=4&page=${currentPage}`)
             dispatch({type: ItemActionTypes.FETCH_ITEMLIST_SUCCESS, payload: response.data})
+            
         } catch (e) {
             dispatch({
                 type: ItemActionTypes.FETCH_ITEMLIST_ERROR,
@@ -33,5 +35,20 @@ export const fetchItem = (itemId: number): any => {
                 payload: 'Fetch error'
             })
         }
+    }
+}
+
+export interface PaginateParams {
+    currentPage: number;
+    firstItem: number;
+    lastItem: number;
+}
+
+export const setCurrentPage = (paginateParams: PaginateParams): any => {
+    console.log('currentPage', paginateParams);
+    
+    return {
+        type: 'SET_CURRENT_PAGE',
+        payload: paginateParams
     }
 }
