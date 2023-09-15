@@ -13,7 +13,6 @@ const Itemlist: React.FC = () => {
 
     useEffect(() => {
         fetchItems(currentPage)
-        console.log('itemlist', items[1]); 
     }, [currentPage])
 
     const paginatedItems = (items.slice(firstItem, lastItem));
@@ -37,8 +36,6 @@ const Itemlist: React.FC = () => {
     if(error) {
         return <h1>{error}</h1>
     }
-
-    console.log('state', currentPage, firstItem, lastItem);
     
     return (
         <div className="itemlist">

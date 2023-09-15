@@ -6,9 +6,9 @@ export interface ItemState {
     itemsPerPage: number;
     currentPage: number;
     // totalPages: number;
-    firstItemOnPage: number;
     firstItem: number;
     lastItem: number;
+    modal: boolean
 }
 
 export enum ItemActionTypes {
@@ -16,7 +16,8 @@ export enum ItemActionTypes {
     FETCH_ITEMLIST_SUCCESS = 'FETCH_ITEMLIST_SUCCESS',
     FETCH_ITEMLIST_ERROR = 'FETCH_ITEMLIST_ERROR',
     FETCH_ITEM = 'FETCH_ITEM',
-    SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+    SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
+    SET_MODAL = 'SET_MODAL'
 }
 
 interface FetchItemsAction {
@@ -40,7 +41,16 @@ interface FetchItemAction {
 
 interface SetCurrentPageAction {
     type: ItemActionTypes.SET_CURRENT_PAGE;
-    payload: number;
+    payload: {
+        currentPage: number;
+        firstItem: number;
+        lastItem: number;
+    }
 }
 
-export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | FetchItemAction | SetCurrentPageAction
+interface SetModalAction {
+    type: ItemActionTypes.SET_MODAL;
+    payload: boolean;
+}
+
+export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | FetchItemAction | SetCurrentPageAction | SetModalAction

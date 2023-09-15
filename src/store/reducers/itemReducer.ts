@@ -16,9 +16,6 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                 loading: false, 
                 error: null, 
                 items: action.payload, 
-                // totalPages: action.payload.length ,
-                // currentPage: state.currentPage,
-                // lastItem: state.firstItem + state.itemsPerPage
             }
         case ItemActionTypes.FETCH_ITEMLIST_ERROR:
             return { 
@@ -37,10 +34,14 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
         case ItemActionTypes.SET_CURRENT_PAGE:
             return {
                 ...state,
-                currentPage: action.payload,
-                firstItem: action.payload,
-                lastItem: action.payload
-                // totalPages: state.totalPages,
+                currentPage: action.payload.currentPage,
+                firstItem: action.payload.firstItem,
+                lastItem: action.payload.lastItem
+            }
+        case ItemActionTypes.SET_MODAL:
+            return {
+                ...state,
+                modal: !state.modal
             }
         default:
             return state

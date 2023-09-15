@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
-import { ItemActionTypes, ItemAction, PaginateParams } from "../../types/item";
+import { ItemActionTypes, ItemAction } from "../../types/item";
 
 export const fetchItems = (currentPage: number): any => {
     return async (dispatch: Dispatch<ItemAction>) => {
@@ -40,8 +40,6 @@ export const fetchItem = (itemId: number): any => {
 
 
 export const setCurrentPage = (currentPage: number, firstItem: number, lastItem: number): any => {
-    console.log('currentPage');
-    
     return {
         type: 'SET_CURRENT_PAGE',
         payload: {
@@ -54,6 +52,5 @@ export const setCurrentPage = (currentPage: number, firstItem: number, lastItem:
 export const setModal = () => {
     return {
         type: 'SET_MODAL',
-        payload: true
     }
 }

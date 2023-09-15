@@ -11,7 +11,6 @@ export const initialState: ItemState = {
     loading: false,
     error: null,
     currentPage: 1,
-    // totalPages: 3,
     itemsPerPage: 4,
     firstItem: 0,
     lastItem: 4,
