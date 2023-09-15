@@ -34,6 +34,7 @@ function Pagination() {
           activeClassName="active"
           activeLinkClassName="active-link"
           breakLabel="..."
+          breakClassName="break"
           nextLabel=">"
           onPageChange={changePage}
           pageRangeDisplayed={5}
