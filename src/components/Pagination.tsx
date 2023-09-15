@@ -9,15 +9,15 @@ function Pagination() {
     const {setCurrentPage} = useActions(ItemActionCreators)
     const totalPages = Math.ceil(items.length / itemsPerPage)
     const changePage = (event: any) => {
-        const paginateParams = {
-            currentPage: event.selected+1,
-            firstItem: event.selected * itemsPerPage,
-            lastItem: (event.selected * itemsPerPage) + itemsPerPage
-        }
-        // const currentPage = event.selected+1
-        // const firstItem = event.selected * itemsPerPage
-        // const lastItem = firstItem + itemsPerPage
-        setCurrentPage(paginateParams)
+        // const paginateParams = {
+        //     currentPage: event.selected+1,
+        //     firstItem: event.selected * itemsPerPage,
+        //     lastItem: (event.selected * itemsPerPage) + itemsPerPage
+        // }
+        const currentPage = event.selected+1
+        const firstItem = event.selected * itemsPerPage
+        const lastItem = firstItem + itemsPerPage
+        setCurrentPage(currentPage, firstItem, lastItem)
     }
 
     return (

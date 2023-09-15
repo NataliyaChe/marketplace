@@ -1,9 +1,8 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
-import { ItemActionTypes, ItemAction } from "../../types/item";
-import { Interface } from 'readline';
+import { ItemActionTypes, ItemAction, PaginateParams } from "../../types/item";
 
-export const fetchItems = (currentPage: number, firstItem: number): any => {
+export const fetchItems = (currentPage: number): any => {
     return async (dispatch: Dispatch<ItemAction>) => {
         try {
             dispatch({type: ItemActionTypes.FETCH_ITEMLIST})
@@ -38,17 +37,23 @@ export const fetchItem = (itemId: number): any => {
     }
 }
 
-export interface PaginateParams {
-    currentPage: number;
-    firstItem: number;
-    lastItem: number;
-}
 
-export const setCurrentPage = (paginateParams: PaginateParams): any => {
-    console.log('currentPage', paginateParams);
+
+export const setCurrentPage = (currentPage: number, firstItem: number, lastItem: number): any => {
+    console.log('currentPage');
     
     return {
         type: 'SET_CURRENT_PAGE',
-        payload: paginateParams
+        payload: {
+            currentPage: currentPage,
+            firstItem: firstItem,
+            lastItem: lastItem
+        }
+    }
+}
+export const setModal = () => {
+    return {
+        type: 'SET_MODAL',
+        payload: true
     }
 }

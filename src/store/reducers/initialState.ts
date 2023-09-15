@@ -13,7 +13,7 @@ export const initialState: ItemState = {
     currentPage: 1,
     // totalPages: 3,
     itemsPerPage: 4,
-    firstItemOnPage: 0,
     firstItem: 0,
-    lastItem: 4
+    lastItem: 4,
+    modal: false
 }
