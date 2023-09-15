@@ -8,7 +8,7 @@ function Header () {
     const {setModal} = useActions(ItemActionCreators)
 
     return (
-        <div className="header container">
+        <div className="header">
             <Link to='.' className='title'>
                 Marketplace
             </Link>
