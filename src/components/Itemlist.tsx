@@ -1,14 +1,13 @@
 import { useEffect } from "react"
-import { fetchItems, fetchItem } from "../store/actions/itemAction"
+import { fetchItems } from "../store/actions/itemAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Itemlist: React.FC = () => {
-    const {items, loading, error, item, currentPage, firstItem, lastItem} = useTypedSelector(state => state.item)
+    const {items, loading, error, currentPage, firstItem, lastItem} = useTypedSelector(state => state.item)
     const {fetchItems} = useActions(ItemActionCreators)
-    const {fetchItem} = useActions(ItemActionCreators)
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -17,15 +16,8 @@ const Itemlist: React.FC = () => {
 
     const paginatedItems = (items.slice(firstItem, lastItem));
 
-    // const getItem = () => {
-    //     // fetchItem()
-    //     console.log('get item', fetchItem())
-    //     console.log('data', item);  
-    // }
     function getItem(event: any) { 
         const itemId = event.target.dataset.id
-        fetchItem(itemId)
-        // const targetItem = JSON.parse(localStorage.getItem('item') || "")
         navigate(`/${itemId}`)
     }
 
@@ -40,10 +32,10 @@ const Itemlist: React.FC = () => {
     return (
         <div className="itemlist">
             {paginatedItems.map(targetItem =>
-                <div key={targetItem.id} data-id={targetItem.id} onClick={getItem} className="item">
+                <div key={targetItem.id} data-id={targetItem.id}  className="item">
                     <p>{targetItem.title}</p>
                     <div className="flex-wrap">
-                        <button data-id={targetItem.id} className="button">
+                        <button data-id={targetItem.id} className="button" onClick={getItem}>
                             More
                         </button>
                         <button data-id={targetItem.id} className="button">

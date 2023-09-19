@@ -1,11 +1,14 @@
 export interface ItemState {
     items: any[];
-    item: any;
+    item: {
+        id: null | number,
+        title: string,
+        price: null | number
+    };
     loading: boolean;
     error: null | string;
     itemsPerPage: number;
     currentPage: number;
-    // totalPages: number;
     firstItem: number;
     lastItem: number;
     modal: boolean
@@ -15,7 +18,7 @@ export enum ItemActionTypes {
     FETCH_ITEMLIST = 'FETCH_ITEMLIST',
     FETCH_ITEMLIST_SUCCESS = 'FETCH_ITEMLIST_SUCCESS',
     FETCH_ITEMLIST_ERROR = 'FETCH_ITEMLIST_ERROR',
-    FETCH_ITEM = 'FETCH_ITEM',
+    GET_CURRENT_ITEM = 'GET_CURRENT_ITEM',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL'
 }
@@ -34,9 +37,13 @@ interface FetchItemsErrorAction {
     payload: string;
 }
 
-interface FetchItemAction {
-    type: ItemActionTypes.FETCH_ITEM;
-    payload: {};
+interface GetCurrentItemAction {
+    type: ItemActionTypes.GET_CURRENT_ITEM;
+    payload: {
+        id: null | number,
+        title: string,
+        price: null | number
+    };
 }
 
 interface SetCurrentPageAction {
@@ -53,4 +60,4 @@ interface SetModalAction {
     payload: boolean;
 }
 
-export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | FetchItemAction | SetCurrentPageAction | SetModalAction
+export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction

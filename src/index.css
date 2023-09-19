@@ -102,6 +102,11 @@ code {
   text-align: center
 }
 
+.page-link {
+  width: 26px;
+  height: 26px;
+}
+
 .page-item::marker {
   color: transparent;
 }

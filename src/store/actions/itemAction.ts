@@ -8,7 +8,6 @@ export const fetchItems = (currentPage: number): any => {
             dispatch({type: ItemActionTypes.FETCH_ITEMLIST})
             const response = await axios.get(`http://localhost:3004/items?limit=4&page=${currentPage}`)
             dispatch({type: ItemActionTypes.FETCH_ITEMLIST_SUCCESS, payload: response.data})
-            
         } catch (e) {
             dispatch({
                 type: ItemActionTypes.FETCH_ITEMLIST_ERROR,
@@ -18,16 +17,21 @@ export const fetchItems = (currentPage: number): any => {
     }
 }
 
-export const fetchItem = (itemId: number): any => {
+export const getCurrentItem = (itemId: number | undefined): any => {
     return async (dispatch: Dispatch<ItemAction>) => {
         try {
             dispatch({type: ItemActionTypes.FETCH_ITEMLIST})
             const response = await axios.get(`http://localhost:3004/items?id=${itemId}`)
-            const singleItem = response.data
-            localStorage.setItem('item', JSON.stringify(singleItem[0]));
-            // const targetItem = JSON.parse(localStorage.getItem('item') || "")
-            // console.log('targetItem', targetItem);
-            dispatch({type: ItemActionTypes.FETCH_ITEM, payload: singleItem[0]})  
+            const data = response.data
+            const singleItem = {
+                id: data[0].id,
+                title: data[0].title,
+                price: data[0].price
+            }          
+            dispatch({
+                type: ItemActionTypes.GET_CURRENT_ITEM, 
+                payload: singleItem
+            })  
         } catch (e) {
             dispatch({
                 type: ItemActionTypes.FETCH_ITEMLIST_ERROR,

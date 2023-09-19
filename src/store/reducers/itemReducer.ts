@@ -24,12 +24,16 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                 error: action.payload, 
                 items: [] 
             }
-        case ItemActionTypes.FETCH_ITEM:
+        case ItemActionTypes.GET_CURRENT_ITEM:
             return { 
                 ...state, 
                 loading: false, 
                 error: null, 
-                item: action.payload 
+                item: {
+                    id: action.payload.id,
+                    title: action.payload.title, 
+                    price: action.payload.price
+                } 
             }
         case ItemActionTypes.SET_CURRENT_PAGE:
             return {

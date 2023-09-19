@@ -1,13 +1,12 @@
 import { ItemState } from "../../types/item"
 
-// const getItem = () => {
-//     const item = localStorage.getItem('item')
-//     const parse = item ? JSON.parse(item) : null
-// }
-
 export const initialState: ItemState = {
     items: [],
-    item: {},
+    item: {
+        id: null,
+        title: '',
+        price: null
+    },
     loading: false,
     error: null,
     currentPage: 1,
