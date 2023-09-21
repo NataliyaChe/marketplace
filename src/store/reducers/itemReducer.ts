@@ -32,7 +32,8 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                 item: {
                     id: action.payload.id,
                     title: action.payload.title, 
-                    price: action.payload.price
+                    price: action.payload.price,
+                    qty: action.payload.qty
                 } 
             }
         case ItemActionTypes.SET_CURRENT_PAGE:
@@ -40,12 +41,17 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                 ...state,
                 currentPage: action.payload.currentPage,
                 firstItem: action.payload.firstItem,
-                lastItem: action.payload.lastItem
+                lastItem: action.payload.lastItem,
             }
         case ItemActionTypes.SET_MODAL:
             return {
                 ...state,
                 modal: !state.modal
+            }
+            case ItemActionTypes.ADD_TO_CART:
+            return {
+                ...state,
+                shoppingCart: action.payload
             }
         default:
             return state

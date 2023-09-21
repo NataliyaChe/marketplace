@@ -3,7 +3,8 @@ export interface ItemState {
     item: {
         id: null | number,
         title: string,
-        price: null | number
+        price: null | number,
+        qty: null | number
     };
     loading: boolean;
     error: null | string;
@@ -11,7 +12,15 @@ export interface ItemState {
     currentPage: number;
     firstItem: number;
     lastItem: number;
-    modal: boolean
+    modal: boolean;
+    shoppingCart:  ISingleItem[]
+}
+
+export interface ISingleItem {
+    id: null | number,
+    title: string,
+    price: null | number,
+    qty: null | number
 }
 
 export enum ItemActionTypes {
@@ -20,7 +29,8 @@ export enum ItemActionTypes {
     FETCH_ITEMLIST_ERROR = 'FETCH_ITEMLIST_ERROR',
     GET_CURRENT_ITEM = 'GET_CURRENT_ITEM',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
-    SET_MODAL = 'SET_MODAL'
+    SET_MODAL = 'SET_MODAL',
+    ADD_TO_CART = 'ADD_TO_CART'
 }
 
 interface FetchItemsAction {
@@ -42,7 +52,8 @@ interface GetCurrentItemAction {
     payload: {
         id: null | number,
         title: string,
-        price: null | number
+        price: null | number,
+        qty: null | number
     };
 }
 
@@ -60,4 +71,9 @@ interface SetModalAction {
     payload: boolean;
 }
 
-export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction
+interface AddToCartAction {
+    type: ItemActionTypes.ADD_TO_CART;
+    payload: []
+}
+
+export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction

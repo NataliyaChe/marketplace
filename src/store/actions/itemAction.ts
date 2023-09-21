@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
-import { ItemActionTypes, ItemAction } from "../../types/item";
+import { ItemActionTypes, ItemAction, ISingleItem } from "../../types/item";
 
 export const fetchItems = (currentPage: number): any => {
     return async (dispatch: Dispatch<ItemAction>) => {
@@ -26,7 +26,8 @@ export const getCurrentItem = (itemId: number | undefined): any => {
             const singleItem = {
                 id: data[0].id,
                 title: data[0].title,
-                price: data[0].price
+                price: data[0].price,
+                qty: data[0].qty
             }          
             dispatch({
                 type: ItemActionTypes.GET_CURRENT_ITEM, 
@@ -56,5 +57,18 @@ export const setCurrentPage = (currentPage: number, firstItem: number, lastItem:
 export const setModal = () => {
     return {
         type: 'SET_MODAL',
+    }
+}
+
+export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
+    fetch(`http://localhost:3004/cart`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(item)
+        })
+        shoppingCart.push(item)
+    return {
+        type: 'ADD_TO_CART',
+        payload: shoppingCart
     }
 }

@@ -1,14 +1,15 @@
 import { useEffect } from "react"
-import { fetchItems } from "../store/actions/itemAction"
+import { fetchItems, getCurrentItem } from "../store/actions/itemAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 const Itemlist: React.FC = () => {
-    const {items, loading, error, currentPage, firstItem, lastItem} = useTypedSelector(state => state.item)
+    const {items, loading, error, currentPage, firstItem, lastItem, item} = useTypedSelector(state => state.item)
     const {fetchItems} = useActions(ItemActionCreators)
-    let navigate = useNavigate();
+    let navigate = useNavigate()
+    const {getCurrentItem} = useActions(ItemActionCreators)
 
     useEffect(() => {
         fetchItems(currentPage)
@@ -19,6 +20,12 @@ const Itemlist: React.FC = () => {
     function getItem(event: any) { 
         const itemId = event.target.dataset.id
         navigate(`/${itemId}`)
+    }
+
+    function addItem(event: any) {
+        const itemId = event.target.dataset.id
+        getCurrentItem(itemId)
+        const currentItem = item
     }
 
     if(loading) {
@@ -38,7 +45,7 @@ const Itemlist: React.FC = () => {
                         <button data-id={targetItem.id} className="button" onClick={getItem}>
                             More
                         </button>
-                        <button data-id={targetItem.id} className="button">
+                        <button data-id={targetItem.id} className="button" onClick={addItem}>
                             Add to cart
                         </button>
                     </div>
