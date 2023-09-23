@@ -1,27 +1,18 @@
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
-import { fetchShoppingCart } from '../store/actions/itemAction'
 import { useEffect } from "react"
 
 function ShoppingCart() {
     const {shoppingCart, loading, error} = useTypedSelector(state => state.item)
-    const {fetchShoppingCart} = useActions(ItemActionCreators)
 
     const submitOrder = (event: any) => {
         console.log('confirm click');    
     }
     console.log('shoppingCart render', shoppingCart);
-    
-    
-    // useEffect(() => {
-    //     fetchShoppingCart()
-    // }, [])
 
    function reduceAmount (qty: number, limit: number) {
         console.log('minus', qty);
-
-
     }
 
     const increaseAmount = () => {

@@ -3,7 +3,7 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import { useActions } from "../hooks/useActions"
 import * as ItemActionCreators from '../store/actions/itemAction'
 import { useParams } from 'react-router-dom'
-import { getCurrentItem, addToCart, setModal, fetchShoppingCart } from '../store/actions/itemAction'
+import { getCurrentItem, addToCart, setModal } from '../store/actions/itemAction'
 
 const SingleItem = () => {
     const params = useParams();
@@ -12,7 +12,6 @@ const SingleItem = () => {
     const {item, shoppingCart, modal} = useTypedSelector(state => state.item)
     const {addToCart} = useActions(ItemActionCreators)
     const {setModal} = useActions(ItemActionCreators)
-    const {fetchShoppingCart} = useActions(ItemActionCreators)
 
     useEffect(() => {
         getCurrentItem(itemId)

@@ -75,17 +75,3 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any =
     }   
 }
 
-export const fetchShoppingCart = (): any => {
-    return async (dispatch: Dispatch<ItemAction>) => {
-        try {
-            dispatch({type: ItemActionTypes.FETCH_START})
-            const response = await axios.get(`http://localhost:3004/cart`)
-            dispatch({type: ItemActionTypes.FETCH_SHOPPING_CART, payload: response.data})
-        } catch (e) {
-            dispatch({
-                type: ItemActionTypes.FETCH_ERROR,
-                payload: 'Fetch error'
-            })
-        }
-    }
-}
