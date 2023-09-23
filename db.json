@@ -62,12 +62,6 @@
     }
   ],
   "cart": [
-    {
-      "id": 2,
-      "title": "Item 2",
-      "price": 150,
-      "qty": 6,
-      "qtyLimit": 2
-    }
+    
   ]
 }

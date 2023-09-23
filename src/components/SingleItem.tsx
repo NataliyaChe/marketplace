@@ -19,8 +19,7 @@ const SingleItem = () => {
     }, [])
     
     function addItem(event: any) {
-        console.log('click');
-        addToCart(itemId, shoppingCart)
+        addToCart(item, shoppingCart)
         setModal()       
     }
 

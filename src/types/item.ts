@@ -21,7 +21,6 @@ export interface ISingleItem {
     title: string,
     price: null | number,
     qty: number,
-    qtyLimit: number,
 }
 
 export enum ItemActionTypes {

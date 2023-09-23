@@ -6,7 +6,7 @@ import * as ItemActionCreators from '../store/actions/itemAction'
 import { useNavigate } from 'react-router-dom'
 
 const Itemlist: React.FC = () => {
-    const {items, loading, error, currentPage, firstItem, lastItem, item, modal, shoppingCart} = useTypedSelector(state => state.item)
+    const {items, loading, error, currentPage, firstItem, lastItem,  shoppingCart} = useTypedSelector(state => state.item)
     const {fetchItems} = useActions(ItemActionCreators)
     let navigate = useNavigate()
     const {setModal} = useActions(ItemActionCreators)
@@ -25,7 +25,9 @@ const Itemlist: React.FC = () => {
 
     function addItem(event: any) {
         const itemId = event.target.dataset.id
-        addToCart(itemId, shoppingCart)
+        const item = items.find(item => item.id === Number(itemId) )
+        
+        addToCart(item, shoppingCart)
         setModal()       
     }
 

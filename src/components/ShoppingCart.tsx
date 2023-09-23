@@ -11,12 +11,12 @@ function ShoppingCart() {
     const submitOrder = (event: any) => {
         console.log('confirm click');    
     }
-    console.log('shoppingCart', shoppingCart);
+    console.log('shoppingCart render', shoppingCart);
     
     
-    useEffect(() => {
-        fetchShoppingCart()
-    }, [])
+    // useEffect(() => {
+    //     fetchShoppingCart()
+    // }, [])
 
    function reduceAmount (qty: number, limit: number) {
         console.log('minus', qty);
@@ -38,12 +38,12 @@ function ShoppingCart() {
                         <div className="flex-wrap">
                             <div className="flex-wrap">
                                 <button className="button" 
-                                    onClick={() => reduceAmount(item.qty, item.qtyLimit)}>
+                                    onClick={() => reduceAmount}>
                                         -
                                 </button>
                                 <span className="qty-input">{item.qty}</span>
                                 <button className="button" onClick={increaseAmount}>+</button>
-                                <span className={`warning ${item.qty === item.qtyLimit ? 'show' : 'hide'}`}>
+                                <span className={`warning`}>
                                     Quantity limit
                                 </span>
                             </div>
