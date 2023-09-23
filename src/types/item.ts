@@ -24,9 +24,9 @@ export interface ISingleItem {
 }
 
 export enum ItemActionTypes {
+    FETCH_START = 'FETCH_START',
     FETCH_ITEMLIST = 'FETCH_ITEMLIST',
-    FETCH_ITEMLIST_SUCCESS = 'FETCH_ITEMLIST_SUCCESS',
-    FETCH_ITEMLIST_ERROR = 'FETCH_ITEMLIST_ERROR',
+    FETCH_ERROR = 'FETCH_ERROR',
     GET_CURRENT_ITEM = 'GET_CURRENT_ITEM',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL',
@@ -34,17 +34,17 @@ export enum ItemActionTypes {
     FETCH_SHOPPING_CART = 'FETCH_SHOPPING_CART'
 }
 
-interface FetchItemsAction {
-    type: ItemActionTypes.FETCH_ITEMLIST;
+interface FetchAction {
+    type: ItemActionTypes.FETCH_START;
 }
 
-interface FetchItemsSuccessAction {
-    type: ItemActionTypes.FETCH_ITEMLIST_SUCCESS;
+interface FetchItemsAction {
+    type: ItemActionTypes.FETCH_ITEMLIST;
     payload: any[];
 }
 
-interface FetchItemsErrorAction {
-    type: ItemActionTypes.FETCH_ITEMLIST_ERROR;
+interface FetchErrorAction {
+    type: ItemActionTypes.FETCH_ERROR;
     payload: string;
 }
 
@@ -82,4 +82,4 @@ interface FetchSoppingCartAction {
     payload: any[]
 }
 
-export type ItemAction = FetchItemsAction | FetchItemsSuccessAction | FetchItemsErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | FetchSoppingCartAction
+export type ItemAction = FetchAction | FetchItemsAction | FetchErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | FetchSoppingCartAction

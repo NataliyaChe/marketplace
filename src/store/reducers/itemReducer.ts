@@ -4,20 +4,20 @@ import { ItemState } from "../../types/item"
 
 export const itemReducer = (state = initialState, action: ItemAction): ItemState => {
     switch(action.type) {
-        case ItemActionTypes.FETCH_ITEMLIST:
+        case ItemActionTypes.FETCH_START:
             return { 
                 ...state, 
                 loading: true, 
                 error: null,
             }
-        case ItemActionTypes.FETCH_ITEMLIST_SUCCESS:
+        case ItemActionTypes.FETCH_ITEMLIST:
             return { 
                 ...state, 
                 loading: false, 
                 error: null, 
                 items: action.payload, 
             }
-        case ItemActionTypes.FETCH_ITEMLIST_ERROR:
+        case ItemActionTypes.FETCH_ERROR:
             return { 
                 ...state, 
                 loading: false, 
