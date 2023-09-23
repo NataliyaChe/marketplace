@@ -48,9 +48,16 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                 ...state,
                 modal: !state.modal
             }
-            case ItemActionTypes.ADD_TO_CART:
+        case ItemActionTypes.ADD_TO_CART:
             return {
                 ...state,
+                shoppingCart: action.payload
+            }
+        case ItemActionTypes.FETCH_SHOPPING_CART:
+            return {
+                ...state,
+                loading: false, 
+                error: null, 
                 shoppingCart: action.payload
             }
         default:
