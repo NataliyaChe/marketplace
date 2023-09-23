@@ -20,8 +20,8 @@ export interface ISingleItem {
     id: null | number,
     title: string,
     price: null | number,
-    qty: null | number,
-    qtyLimit: null | number,
+    qty: number,
+    qtyLimit: number,
 }
 
 export enum ItemActionTypes {

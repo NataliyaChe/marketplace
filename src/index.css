@@ -147,6 +147,7 @@ code {
 .cart-wrap {
   padding: 0;
 }
+
 .item-container {
   padding-bottom: 10px;
   border-bottom: 3px solid palevioletred;
@@ -154,5 +155,18 @@ code {
 
 .qty-input {
   margin: 0 10px;
+}
+
+.warning {
+  color: crimson;
+  margin-left: 20px;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none
 }
 

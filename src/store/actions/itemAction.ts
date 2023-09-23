@@ -92,11 +92,13 @@ export const addToCart = ( itemId: number, shoppingCart: ISingleItem[]): any => 
                 qty: 1,
                 qtyLimit: data[0].qty
             }  
-            fetch(`http://localhost:3004/cart`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(cartItem)
-            })
+            // fetch(`http://localhost:3004/cart`, {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(cartItem)
+            // })
+            axios.post(`http://localhost:3004/cart`, cartItem)
+            
             shoppingCart.push(cartItem)  
             console.log('action shopping cart', shoppingCart);
             
