@@ -60,17 +60,57 @@ export const setModal = () => {
     }
 }
 
-export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
-    fetch(`http://localhost:3004/cart`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(item)
-        })
-        shoppingCart.push(item)
-    return {
-        type: 'ADD_TO_CART',
-        payload: shoppingCart
-    }   
+// export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
+//     const cartItem = {
+//         id: item.id,
+//         title: item.title,
+//         price: item.price,
+//         qty: 1
+//     }
+//     fetch(`http://localhost:3004/cart`, {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify(item)
+//         })
+//         shoppingCart.push(item)
+//     return {
+//         type: 'ADD_TO_CART',
+//         payload: shoppingCart
+//     }   
+// }
+
+export const addToCart = ( itemId: number, shoppingCart: ISingleItem[]): any => {
+    return async (dispatch: Dispatch<ItemAction>) => {
+        try {
+            dispatch({type: ItemActionTypes.FETCH_START})
+            const response = await axios.get(`http://localhost:3004/items?id=${itemId}`)
+            const data = response.data
+            const cartItem : ISingleItem = {
+                id: data[0].id,
+                title: data[0].title,
+                price: data[0].price,
+                qty: 1,
+                qtyLimit: data[0].qty
+            }  
+            fetch(`http://localhost:3004/cart`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cartItem)
+            })
+            shoppingCart.push(cartItem)  
+            console.log('action shopping cart', shoppingCart);
+            
+            dispatch({
+                type: ItemActionTypes.ADD_TO_CART,
+                payload: shoppingCart
+            })  
+        } catch (e) {
+            dispatch({
+                type: ItemActionTypes.FETCH_ERROR,
+                payload: 'Fetch error'
+            })
+        }
+    }  
 }
 
 export const fetchShoppingCart = (): any => {

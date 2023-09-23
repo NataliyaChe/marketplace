@@ -6,7 +6,6 @@ import ShoppingCart from "./ShoppingCart"
 
 function Modal() {
     const {setModal} = useActions(ItemActionCreators)
-    
 
     return (
         <>

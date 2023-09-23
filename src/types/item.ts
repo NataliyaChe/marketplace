@@ -20,7 +20,8 @@ export interface ISingleItem {
     id: null | number,
     title: string,
     price: null | number,
-    qty: null | number
+    qty: null | number,
+    qtyLimit: null | number,
 }
 
 export enum ItemActionTypes {
@@ -74,7 +75,7 @@ interface SetModalAction {
 
 interface AddToCartAction {
     type: ItemActionTypes.ADD_TO_CART;
-    payload: []
+    payload: any[]
 }
 
 interface FetchSoppingCartAction {

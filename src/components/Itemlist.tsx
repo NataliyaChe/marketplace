@@ -1,15 +1,16 @@
 import { useEffect } from "react"
-import { fetchItems, getCurrentItem } from "../store/actions/itemAction"
+import { fetchItems, getCurrentItem, addToCart, setModal } from "../store/actions/itemAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
 import { useNavigate } from 'react-router-dom'
 
 const Itemlist: React.FC = () => {
-    const {items, loading, error, currentPage, firstItem, lastItem, item} = useTypedSelector(state => state.item)
+    const {items, loading, error, currentPage, firstItem, lastItem, item, modal, shoppingCart} = useTypedSelector(state => state.item)
     const {fetchItems} = useActions(ItemActionCreators)
     let navigate = useNavigate()
-    const {getCurrentItem} = useActions(ItemActionCreators)
+    const {setModal} = useActions(ItemActionCreators)
+    const {addToCart} = useActions(ItemActionCreators)
 
     useEffect(() => {
         fetchItems(currentPage)
@@ -24,8 +25,8 @@ const Itemlist: React.FC = () => {
 
     function addItem(event: any) {
         const itemId = event.target.dataset.id
-        getCurrentItem(itemId)
-        const currentItem = item
+        addToCart(itemId, shoppingCart)
+        setModal()       
     }
 
     if(loading) {
