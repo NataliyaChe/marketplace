@@ -62,9 +62,7 @@ export const setModal = () => {
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
         const cartItem = {
-            id: item.id,
-            title: item.title,
-            price: item.price,
+            ...item,
             qty: 1
         }
         shoppingCart.push(cartItem)
