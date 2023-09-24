@@ -12,6 +12,7 @@ const Itemlist: React.FC = () => {
     const {setModal} = useActions(ItemActionCreators)
     const {addToCart} = useActions(ItemActionCreators)
 
+
     useEffect(() => {
         fetchItems(currentPage)
     }, [currentPage])

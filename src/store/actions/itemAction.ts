@@ -42,8 +42,6 @@ export const getCurrentItem = (itemId: number | undefined): any => {
     }
 }
 
-
-
 export const setCurrentPage = (currentPage: number, firstItem: number, lastItem: number): any => {
     return {
         type: 'SET_CURRENT_PAGE',
@@ -61,11 +59,29 @@ export const setModal = () => {
 }
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
-        const cartItem = {
-            ...item,
-            qty: 1
-        }
-        shoppingCart.push(cartItem)
+    let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
+    
+    console.log('currentItem find?', currentItem);
+    if(currentItem) {
+        // shoppingCart.forEach((item) => {
+        //     if(item.id === currentItem.id) {
+
+        //     } 
+        // })
+        console.log('currentItem', currentItem);
+    } else {
+        currentItem = {...item, qty: 1}
+        
+        shoppingCart.push(currentItem)
+    }
+   
+    
+    
+        // const cartItem = {
+        //     ...item,
+        //     qty: 1
+        // }
+        // shoppingCart.push(cartItem)
         
     return {
         type: 'ADD_TO_CART',
