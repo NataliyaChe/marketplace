@@ -52,6 +52,7 @@ export const setCurrentPage = (currentPage: number, firstItem: number, lastItem:
         }
     }
 }
+
 export const setModal = () => {
     return {
         type: 'SET_MODAL',
@@ -60,32 +61,33 @@ export const setModal = () => {
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
-    
     console.log('currentItem find?', currentItem);
     if(currentItem) {
         // shoppingCart.forEach((item) => {
         //     if(item.id === currentItem.id) {
-
         //     } 
         // })
         console.log('currentItem', currentItem);
     } else {
         currentItem = {...item, qty: 1}
-        
         shoppingCart.push(currentItem)
     }
-   
-    
-    
         // const cartItem = {
         //     ...item,
         //     qty: 1
         // }
-        // shoppingCart.push(cartItem)
-        
+        // shoppingCart.push(cartItem)  
     return {
         type: 'ADD_TO_CART',
         payload: shoppingCart
     }   
 }
 
+export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any => {
+    const newShoppingCart = shoppingCart.filter(item => item.id !== itemId)
+    
+    return {
+        type: 'DELETE_FROM_CART',
+        payload: newShoppingCart
+    } 
+}

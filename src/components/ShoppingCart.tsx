@@ -2,21 +2,28 @@ import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
 import { useEffect } from "react"
+import { deleteFromCart } from "../store/actions/itemAction"
 
 function ShoppingCart() {
     const {shoppingCart, loading, error} = useTypedSelector(state => state.item)
+    const {deleteFromCart} = useActions(ItemActionCreators)
 
     const submitOrder = (event: any) => {
         console.log('confirm click');    
     }
-    console.log('shoppingCart render', shoppingCart);
 
-   function reduceAmount (qty: number, limit: number) {
-        console.log('minus', qty);
+    function deleteItem(event: any) {
+        const itemId = Number(event.target.dataset.id)
+        deleteFromCart(itemId, shoppingCart)    
     }
 
-    const increaseAmount = () => {
-        console.log('plus');
+    function reduceAmount(event: any) {
+        const itemId = Number(event.target.dataset.id)
+       
+    }
+
+        const increaseAmount = () => {
+            console.log('plus');
     }
 
     return (
@@ -29,7 +36,7 @@ function ShoppingCart() {
                         <div className="flex-wrap">
                             <div className="flex-wrap">
                                 <button className="button" 
-                                    onClick={() => reduceAmount}>
+                                    onClick={reduceAmount}>
                                         -
                                 </button>
                                 <span className="qty-input">{item.qty}</span>
@@ -38,7 +45,7 @@ function ShoppingCart() {
                                     Quantity limit
                                 </span>
                             </div>
-                            <button className="button">Delete</button>
+                            <button className="button" data-id={item.id} onClick={deleteItem}>Delete</button>
                         </div>
                     </div>)
                 }
