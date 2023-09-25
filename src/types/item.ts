@@ -3,7 +3,7 @@ export interface ItemState {
     item: {
         id: null | number,
         title: string,
-        price: null | number,
+        price: number,
         qty: null | number
     };
     loading: boolean;
@@ -13,13 +13,14 @@ export interface ItemState {
     firstItem: number;
     lastItem: number;
     modal: boolean;
-    shoppingCart:  ISingleItem[]
+    shoppingCart:  ISingleItem[],
+    totalCost: number
 }
 
 export interface ISingleItem {
     id: null | number,
     title: string,
-    price: null | number,
+    price: number,
     qty: number,
 }
 
@@ -53,7 +54,7 @@ interface GetCurrentItemAction {
     payload: {
         id: null | number,
         title: string,
-        price: null | number,
+        price: number,
         qty: null | number
     };
 }
@@ -74,7 +75,10 @@ interface SetModalAction {
 
 interface AddToCartAction {
     type: ItemActionTypes.ADD_TO_CART;
-    payload: any[]
+    payload: {
+        shoppingCart: any[];
+        totalCost: number
+    }
 }
 
 interface DeleteFromCartAction {

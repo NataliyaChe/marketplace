@@ -51,7 +51,8 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
         case ItemActionTypes.ADD_TO_CART:
             return {
                 ...state,
-                shoppingCart: action.payload
+                shoppingCart: action.payload.shoppingCart,
+                totalCost: action.payload.totalCost
             }
         case ItemActionTypes.DELETE_FROM_CART:
             return {

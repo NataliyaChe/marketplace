@@ -5,7 +5,7 @@ export const initialState: ItemState = {
     item: {
         id: null,
         title: '',
-        price: null,
+        price: 0,
         qty: null
     },
     loading: false,
@@ -15,5 +15,6 @@ export const initialState: ItemState = {
     firstItem: 0,
     lastItem: 4,
     modal: false,
-    shoppingCart: []
+    shoppingCart: [],
+    totalCost: 0
 }

@@ -59,7 +59,7 @@ export const setModal = () => {
     }
 }
 
-export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
+export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalCost: number): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
     if(currentItem) {
         shoppingCart.forEach((item) => {
@@ -72,9 +72,14 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any =
         currentItem = {...item, qty: 1}
         shoppingCart.push(currentItem)
     }
+    const newTotalCost = totalCost + currentItem.price
+    
     return {
         type: 'ADD_TO_CART',
-        payload: shoppingCart
+        payload: {
+            shoppingCart: shoppingCart,
+            totalCost: newTotalCost
+        }
     }   
 }
 
@@ -86,3 +91,4 @@ export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any
         payload: newShoppingCart
     } 
 }
+
