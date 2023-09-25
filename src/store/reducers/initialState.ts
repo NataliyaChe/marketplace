@@ -6,7 +6,8 @@ export const initialState: ItemState = {
         id: null,
         title: '',
         price: 0,
-        qty: null
+        qty: 0,
+        qtyLimit: 0
     },
     loading: false,
     error: null,

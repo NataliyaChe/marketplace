@@ -4,7 +4,8 @@ export interface ItemState {
         id: null | number,
         title: string,
         price: number,
-        qty: null | number
+        qty:  number,
+        qtyLimit: number
     };
     loading: boolean;
     error: null | string;
@@ -22,6 +23,7 @@ export interface ISingleItem {
     title: string,
     price: number,
     qty: number,
+    qtyLimit: number
 }
 
 export enum ItemActionTypes {
@@ -55,7 +57,8 @@ interface GetCurrentItemAction {
         id: null | number,
         title: string,
         price: number,
-        qty: null | number
+        qty: number,
+        qtyLimit: number
     };
 }
 

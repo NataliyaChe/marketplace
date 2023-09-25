@@ -33,7 +33,8 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                     id: action.payload.id,
                     title: action.payload.title, 
                     price: action.payload.price,
-                    qty: action.payload.qty
+                    qty: action.payload.qty,
+                    qtyLimit: action.payload.qtyLimit
                 } 
             }
         case ItemActionTypes.SET_CURRENT_PAGE:

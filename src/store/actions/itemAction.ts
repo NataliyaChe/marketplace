@@ -27,7 +27,8 @@ export const getCurrentItem = (itemId: number | undefined): any => {
                 id: data[0].id,
                 title: data[0].title,
                 price: data[0].price,
-                qty: data[0].qty
+                qty: data[0].qty,
+                qtyLimit: data[0].qtyLimit
             }          
             dispatch({
                 type: ItemActionTypes.GET_CURRENT_ITEM, 
@@ -63,17 +64,18 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalC
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
     if(currentItem) {
         shoppingCart.forEach((item) => {
-            if(item.id === currentItem?.id) {
+            if(item.id === currentItem?.id && item.qtyLimit > item.qty) {
                 const newQty = ++currentItem.qty
                 item.qty = newQty 
             } 
         })
     } else {
         currentItem = {...item, qty: 1}
+        console.log('push currentItem', currentItem);
         shoppingCart.push(currentItem)
     }
     const newTotalCost = totalCost + currentItem.price
-    
+
     return {
         type: 'ADD_TO_CART',
         payload: {
