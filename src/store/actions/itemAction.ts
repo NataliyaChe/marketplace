@@ -61,22 +61,17 @@ export const setModal = () => {
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
-    console.log('currentItem find?', currentItem);
     if(currentItem) {
-        // shoppingCart.forEach((item) => {
-        //     if(item.id === currentItem.id) {
-        //     } 
-        // })
-        console.log('currentItem', currentItem);
+        shoppingCart.forEach((item) => {
+            if(item.id === currentItem?.id) {
+                const newQty = ++currentItem.qty
+                item.qty = newQty 
+            } 
+        })
     } else {
         currentItem = {...item, qty: 1}
         shoppingCart.push(currentItem)
     }
-        // const cartItem = {
-        //     ...item,
-        //     qty: 1
-        // }
-        // shoppingCart.push(cartItem)  
     return {
         type: 'ADD_TO_CART',
         payload: shoppingCart
