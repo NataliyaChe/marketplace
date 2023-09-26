@@ -21,8 +21,8 @@ function ShoppingCart() {
 
     function reduceAmount(event: any) {
         const itemId = Number(event.target.dataset.id)
-        const item = shoppingCart.find(item => item.id === Number(itemId)) 
-        deleteOneItemQty(item, shoppingCart, totalCost)
+        // const item = shoppingCart.find(item => item.id === Number(itemId)) 
+        deleteOneItemQty(itemId, shoppingCart)   
     }
 
     function increaseAmount(event: any) {

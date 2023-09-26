@@ -72,10 +72,9 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalC
         })
     } else {
         currentItem = {...item, qty: 1}
-        console.log('push currentItem', currentItem);
         shoppingCart.push(currentItem)
     }
-    const newTotalCost = totalCost + currentItem.price
+    const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
 
     return {
         type: 'ADD_TO_CART',
@@ -99,24 +98,22 @@ export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any
     } 
 }
 
-export const deleteOneItemQty = (item: ISingleItem, shoppingCart: ISingleItem[], totalCost: number): any => {
-    let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
-    let newShoppingCart
-    if(currentItem) {
-        shoppingCart.forEach((item) => {
-            if(item.id === currentItem?.id && item.qty > 1) {
-                const newQty = --currentItem.qty
-                item.qty = newQty 
-            } else {
-                newShoppingCart = shoppingCart.filter(item => item.id !== currentItem?.id)
-            }
-        })
-    }
-    const newTotalCost = totalCost - item.price
+export const deleteOneItemQty = (itemId: number, shoppingCart: ISingleItem[]): any => {
+    let currentItem = shoppingCart.find(currentItem => currentItem.id === itemId)
+    shoppingCart.forEach((item, index) => {
+        if( item.id === currentItem?.id && item.qty > 1) {
+            const newQty = --item.qty   
+            item.qty = newQty     
+        } else if (item.id === currentItem?.id && item.qty === 1) {
+            shoppingCart.splice(index, 1)
+        }
+    })
+        const newTotalCost = shoppingCart?.reduce((sum, item) => sum + (item.qty * item.price), 0)
+
     return {
         type: 'DELETE_ONE_ITEM_QTY',
         payload: {
-            shoppingCart:  newShoppingCart,
+            shoppingCart:  shoppingCart,
             totalCost: newTotalCost
         }
     }
