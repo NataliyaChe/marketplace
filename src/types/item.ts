@@ -34,7 +34,8 @@ export enum ItemActionTypes {
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL',
     ADD_TO_CART = 'ADD_TO_CART',
-    DELETE_FROM_CART = 'DELETE_FROM_CART'
+    DELETE_FROM_CART = 'DELETE_FROM_CART',
+    DELETE_ONE_ITEM_QTY = 'DELETE_ONE_ITEM_QTY'
 }
 
 interface FetchAction {
@@ -92,4 +93,12 @@ interface DeleteFromCartAction {
     }
 }
 
-export type ItemAction = FetchAction | FetchItemsAction | FetchErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | DeleteFromCartAction
+interface deleteOneItemQtyAction {
+    type: ItemActionTypes.DELETE_ONE_ITEM_QTY;
+    payload: {
+        shoppingCart: any[],
+        totalCost: number
+    }
+}
+
+export type ItemAction = FetchAction | FetchItemsAction | FetchErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | DeleteFromCartAction | deleteOneItemQtyAction

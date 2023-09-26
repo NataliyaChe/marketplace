@@ -2,11 +2,13 @@ import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
 import { useEffect } from "react"
-import { deleteFromCart } from "../store/actions/itemAction"
+import { deleteFromCart, addToCart, deleteOneItemQty } from "../store/actions/itemAction"
 
 function ShoppingCart() {
     const {shoppingCart, loading, error, totalCost} = useTypedSelector(state => state.item)
     const {deleteFromCart} = useActions(ItemActionCreators)
+    const {addToCart} = useActions(ItemActionCreators)
+    const {deleteOneItemQty} = useActions(ItemActionCreators)
 
     const submitOrder = (event: any) => {
         console.log('confirm click');    
@@ -14,16 +16,19 @@ function ShoppingCart() {
 
     function deleteItem(event: any) {
         const itemId = Number(event.target.dataset.id)
-        deleteFromCart(itemId, shoppingCart, totalCost)    
+        deleteFromCart(itemId, shoppingCart)    
     }
 
     function reduceAmount(event: any) {
         const itemId = Number(event.target.dataset.id)
-       
+        const item = shoppingCart.find(item => item.id === Number(itemId)) 
+        deleteOneItemQty(item, shoppingCart, totalCost)
     }
 
-        const increaseAmount = () => {
-            console.log('plus');
+    function increaseAmount(event: any) {
+        const itemId = Number(event.target.dataset.id)
+        const item = shoppingCart.find(item => item.id === Number(itemId)) 
+        addToCart(item, shoppingCart, totalCost)
     }
 
     return (
@@ -37,12 +42,12 @@ function ShoppingCart() {
                                 <p className="text">Price: {item.price}</p>
                                 <p className="text">x</p>
                                 <div className="flex-wrap">
-                                    <button className="button" 
+                                    <button className="button" data-id={item.id}
                                         onClick={reduceAmount}>
                                             -
                                     </button>
                                     <span className="qty-input">{item.qty}</span>
-                                    <button className="button" onClick={increaseAmount}>+</button>
+                                    <button className="button"  data-id={item.id} onClick={increaseAmount}>+</button>
                                     <span className={`warning`}>
                                         Quantity limit
                                     </span>

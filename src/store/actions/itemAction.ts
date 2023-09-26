@@ -86,10 +86,9 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalC
     }   
 }
 
-export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[], totalCost: number): any => {
+export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any => {
     const newShoppingCart = shoppingCart.filter(item => item.id !== itemId)
     const newTotalCost = newShoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
-    console.log('totalCost', newTotalCost);
     
     return {
         type: 'DELETE_FROM_CART',
@@ -100,7 +99,26 @@ export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[], tota
     } 
 }
 
-export const deleteOneItem = (): any => {
-
+export const deleteOneItemQty = (item: ISingleItem, shoppingCart: ISingleItem[], totalCost: number): any => {
+    let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
+    let newShoppingCart
+    if(currentItem) {
+        shoppingCart.forEach((item) => {
+            if(item.id === currentItem?.id && item.qty > 1) {
+                const newQty = --currentItem.qty
+                item.qty = newQty 
+            } else {
+                newShoppingCart = shoppingCart.filter(item => item.id !== currentItem?.id)
+            }
+        })
+    }
+    const newTotalCost = totalCost - item.price
+    return {
+        type: 'DELETE_ONE_ITEM_QTY',
+        payload: {
+            shoppingCart:  newShoppingCart,
+            totalCost: newTotalCost
+        }
+    }
 }
 
