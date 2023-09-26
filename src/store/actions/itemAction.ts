@@ -62,6 +62,7 @@ export const setModal = () => {
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalCost: number): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
+
     if(currentItem) {
         shoppingCart.forEach((item) => {
             if(item.id === currentItem?.id && item.qtyLimit > item.qty) {
@@ -85,12 +86,21 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalC
     }   
 }
 
-export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any => {
+export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[], totalCost: number): any => {
     const newShoppingCart = shoppingCart.filter(item => item.id !== itemId)
+    const newTotalCost = newShoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
+    console.log('totalCost', newTotalCost);
     
     return {
         type: 'DELETE_FROM_CART',
-        payload: newShoppingCart
+        payload: {
+            shoppingCart:  newShoppingCart,
+            totalCost: newTotalCost
+        }
     } 
+}
+
+export const deleteOneItem = (): any => {
+
 }
 

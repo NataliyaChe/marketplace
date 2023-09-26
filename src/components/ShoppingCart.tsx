@@ -14,7 +14,7 @@ function ShoppingCart() {
 
     function deleteItem(event: any) {
         const itemId = Number(event.target.dataset.id)
-        deleteFromCart(itemId, shoppingCart)    
+        deleteFromCart(itemId, shoppingCart, totalCost)    
     }
 
     function reduceAmount(event: any) {

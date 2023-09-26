@@ -86,7 +86,10 @@ interface AddToCartAction {
 
 interface DeleteFromCartAction {
     type: ItemActionTypes.DELETE_FROM_CART;
-    payload: any[]
+    payload: {
+        shoppingCart: any[],
+        totalCost: number
+    }
 }
 
 export type ItemAction = FetchAction | FetchItemsAction | FetchErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | DeleteFromCartAction

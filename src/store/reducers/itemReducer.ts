@@ -58,7 +58,8 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
         case ItemActionTypes.DELETE_FROM_CART:
             return {
                 ...state,
-                shoppingCart: action.payload
+                shoppingCart: action.payload.shoppingCart,
+                totalCost: action.payload.totalCost
             }
         default:
             return state
