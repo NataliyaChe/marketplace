@@ -154,6 +154,8 @@ code {
 }
 
 .qty-input {
+  width: 50px;
+  padding: 6px;
   margin: 0 10px;
 }
 

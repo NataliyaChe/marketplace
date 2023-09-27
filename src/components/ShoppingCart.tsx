@@ -21,7 +21,6 @@ function ShoppingCart() {
 
     function reduceAmount(event: any) {
         const itemId = Number(event.target.dataset.id)
-        // const item = shoppingCart.find(item => item.id === Number(itemId)) 
         deleteOneItemQty(itemId, shoppingCart)   
     }
 
@@ -29,6 +28,11 @@ function ShoppingCart() {
         const itemId = Number(event.target.dataset.id)
         const item = shoppingCart.find(item => item.id === Number(itemId)) 
         addToCart(item, shoppingCart, totalCost)
+    }
+
+    function getValue(event: any) {
+        console.log('value', event.target.value);
+        
     }
 
     return (
@@ -46,7 +50,8 @@ function ShoppingCart() {
                                         onClick={reduceAmount}>
                                             -
                                     </button>
-                                    <span className="qty-input">{item.qty}</span>
+                                    <input type="text" className="qty-input" value={item.qty} onChange={getValue}/>
+                                    {/* <span className="qty-input">{item.qty}</span> */}
                                     <button className="button"  data-id={item.id} onClick={increaseAmount}>+</button>
                                     <span className={`warning`}>
                                         Quantity limit
