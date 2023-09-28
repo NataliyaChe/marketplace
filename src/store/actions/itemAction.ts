@@ -62,15 +62,10 @@ export const setModal = () => {
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalCost: number): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
-
-    if(currentItem) {
-        shoppingCart.forEach((item) => {
-            if(item.id === currentItem?.id && item.qtyLimit > item.qty) {
-                const newQty = ++currentItem.qty
-                item.qty = newQty 
-            } 
-        })
-    } else {
+    if(currentItem && currentItem.qtyLimit > currentItem.qty) {
+        const newQty = ++currentItem.qty
+        currentItem.qty = newQty 
+    } else if (!currentItem) {
         currentItem = {...item, qty: 1}
         shoppingCart.push(currentItem)
     }
