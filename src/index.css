@@ -193,7 +193,7 @@ code {
   position: absolute;
   right: 24px;
   top: 6px;
-  z-index: 10;
+  z-index: 1;
   text-align: center
 }
 
