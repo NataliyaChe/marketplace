@@ -15,7 +15,8 @@ export interface ItemState {
     lastItem: number;
     modal: boolean;
     shoppingCart:  ISingleItem[],
-    totalCost: number
+    totalCost: number,
+    // inputValue: number
 }
 
 export interface ISingleItem {
@@ -35,7 +36,8 @@ export enum ItemActionTypes {
     SET_MODAL = 'SET_MODAL',
     ADD_TO_CART = 'ADD_TO_CART',
     DELETE_FROM_CART = 'DELETE_FROM_CART',
-    DELETE_ONE_ITEM_QTY = 'DELETE_ONE_ITEM_QTY'
+    DELETE_ONE_ITEM_QTY = 'DELETE_ONE_ITEM_QTY',
+    CHANGE_AMOUNT = 'CHANGE-AMOUNT'
 }
 
 interface FetchAction {
@@ -101,4 +103,12 @@ interface deleteOneItemQtyAction {
     }
 }
 
-export type ItemAction = FetchAction | FetchItemsAction | FetchErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | DeleteFromCartAction | deleteOneItemQtyAction
+interface changeAmountAction {
+    type: ItemActionTypes.CHANGE_AMOUNT;
+    payload: {
+        shoppingCart: any[],
+        totalCost: number
+    }
+}
+
+export type ItemAction = FetchAction | FetchItemsAction | FetchErrorAction | GetCurrentItemAction | SetCurrentPageAction | SetModalAction | AddToCartAction | DeleteFromCartAction | deleteOneItemQtyAction | changeAmountAction

@@ -67,6 +67,12 @@ export const itemReducer = (state = initialState, action: ItemAction): ItemState
                 shoppingCart: action.payload.shoppingCart,
                 totalCost: action.payload.totalCost
             }
+        case ItemActionTypes.CHANGE_AMOUNT:
+            return {
+                ...state, 
+                shoppingCart: action.payload.shoppingCart,
+                totalCost: action.payload.totalCost
+            }
         default:
             return state
     }

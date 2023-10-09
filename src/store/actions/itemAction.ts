@@ -60,7 +60,7 @@ export const setModal = () => {
     }
 }
 
-export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalCost: number): any => {
+export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
     if(currentItem && currentItem.qtyLimit > currentItem.qty) {
         const newQty = ++currentItem.qty
@@ -80,6 +80,22 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[], totalC
     }   
 }
 
+
+export const changeQty = (inputValue: number, itemId: number, shoppingCart: ISingleItem[]): any => {
+    let currentItem = shoppingCart.find(currentItem => currentItem.id === itemId)
+    if(currentItem && currentItem.qtyLimit >= inputValue && inputValue > 0) {
+        currentItem.qty = inputValue
+    } 
+    const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
+
+    return {
+        type: 'CHANGE_AMOUNT',
+        payload: {
+            shoppingCart: shoppingCart,
+            totalCost: newTotalCost
+        }
+    }   
+}
 export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any => {
     const newShoppingCart = shoppingCart.filter(item => item.id !== itemId)
     const newTotalCost = newShoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)

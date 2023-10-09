@@ -17,5 +17,6 @@ export const initialState: ItemState = {
     lastItem: 4,
     modal: false,
     shoppingCart: [],
-    totalCost: 0
+    totalCost: 0,
+    // inputValue: 0
 }
