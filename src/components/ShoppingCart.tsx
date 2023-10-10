@@ -49,7 +49,7 @@ function ShoppingCart() {
                             <div className="flex-wrap price-container">
                                 <p className="text">Price: {item.price}</p>
                                 <p className="text">x</p>
-                                <div className="flex-wrap">
+                                <div className="flex-wrap amount-container">
                                     <button className="button" data-id={item.id}
                                         onClick={reduceAmount}>
                                             -
@@ -57,12 +57,24 @@ function ShoppingCart() {
                                     <input type="text" className="qty-input"  value={item.qty} data-id={item.id} onChange={changeAmount}/>
                                     {/* <span className="qty-input">{item.qty}</span> */}
                                     <button className="button"  data-id={item.id} onClick={increaseAmount}>+</button>
-                                    <span className={`warning`}>
-                                        Quantity limit
-                                    </span>
+                                    
+                                </div>
+                                <div className="flex-wrap info-container">
+                                    {item.qty % 2 === 0 &&
+                                        <p className={`info`}>
+                                            Discount 10%
+                                        </p>
+                                    }
+                                    { item.qty === item.qtyLimit &&
+                                        <p className={`warning`}>
+                                            Quantity limit
+                                        </p>
+                                    }
                                 </div>
                             </div>
-                            <button className="button" data-id={item.id} onClick={deleteItem}>Delete</button>
+                            <button className="button" data-id={item.id} onClick={deleteItem}>
+                                Delete
+                            </button>
                         </div>
                     </div>)
                 }

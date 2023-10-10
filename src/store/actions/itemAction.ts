@@ -69,7 +69,9 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any =
         currentItem = {...item, qty: 1}
         shoppingCart.push(currentItem)
     }
-    const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
+
+    const newTotalCost = shoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
+    // const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * price), 0)
 
     return {
         type: 'ADD_TO_CART',
@@ -86,7 +88,8 @@ export const changeQty = (inputValue: number, itemId: number, shoppingCart: ISin
     if(currentItem && currentItem.qtyLimit >= inputValue && inputValue > 0) {
         currentItem.qty = inputValue
     } 
-    const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
+    const newTotalCost = shoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
+    // const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
 
     return {
         type: 'CHANGE_AMOUNT',
@@ -98,7 +101,8 @@ export const changeQty = (inputValue: number, itemId: number, shoppingCart: ISin
 }
 export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any => {
     const newShoppingCart = shoppingCart.filter(item => item.id !== itemId)
-    const newTotalCost = newShoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
+    const newTotalCost = newShoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
+    // const newTotalCost = newShoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
     
     return {
         type: 'DELETE_FROM_CART',
@@ -119,7 +123,8 @@ export const deleteOneItemQty = (itemId: number, shoppingCart: ISingleItem[]): a
             shoppingCart.splice(index, 1)
         }
     })
-        const newTotalCost = shoppingCart?.reduce((sum, item) => sum + (item.qty * item.price), 0)
+        // const newTotalCost = shoppingCart?.reduce((sum, item) => sum + (item.qty * item.price), 0)
+        const newTotalCost = shoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
 
     return {
         type: 'DELETE_ONE_ITEM_QTY',
