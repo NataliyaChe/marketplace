@@ -10,6 +10,8 @@ function ShoppingCart() {
     const {addToCart} = useActions(ItemActionCreators)
     const {deleteOneItemQty} = useActions(ItemActionCreators)
     const {changeQty} = useActions(ItemActionCreators)
+    const [amount, setAmount] = useState('')
+
 
     const submitOrder = (event: any) => {
         console.log('confirm click');    
@@ -34,8 +36,9 @@ function ShoppingCart() {
     function changeAmount(event: any) {
         console.log('target value', event.target.value);
         const itemId = Number(event.target.dataset.id)
-        const inputValue = Number(event.target.value)
-        changeQty(inputValue, itemId, shoppingCart, totalCost)
+        setAmount(event.target.value)
+        // const inputValue = Number(event.target.value)
+        // changeQty(inputValue, itemId, shoppingCart, totalCost)
         
     }
 
@@ -54,8 +57,8 @@ function ShoppingCart() {
                                         onClick={reduceAmount}>
                                             -
                                     </button>
-                                    <input type="text" className="qty-input"  value={item.qty} data-id={item.id} onChange={changeAmount}/>
-                                    {/* <span className="qty-input">{item.qty}</span> */}
+                                    {/* <input type="text" className="qty-input"  value={item.qty} data-id={item.id} onChange={changeAmount}/> */}
+                                    <input type="text" className="qty-input"  value={amount} data-id={item.id} onChange={changeAmount}/>
                                     <button className="button"  data-id={item.id} onClick={increaseAmount}>+</button>
                                     
                                 </div>
