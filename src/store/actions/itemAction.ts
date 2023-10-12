@@ -62,8 +62,8 @@ export const setModal = () => {
 
 export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any => {
     let currentItem = shoppingCart.find(currentItem => currentItem.id === item.id)
-    if(currentItem && currentItem.qtyLimit > currentItem.qty) {
-        const newQty = ++currentItem.qty
+    if(currentItem) {
+        const newQty = item.qty
         currentItem.qty = newQty 
     } else if (!currentItem) {
         currentItem = {...item, qty: 1}
@@ -71,7 +71,6 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any =
     }
 
     const newTotalCost = shoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
-    // const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * price), 0)
 
     return {
         type: 'ADD_TO_CART',
@@ -82,52 +81,20 @@ export const addToCart = (item: ISingleItem, shoppingCart: ISingleItem[]): any =
     }   
 }
 
-
-export const changeQty = (inputValue: number, itemId: number, shoppingCart: ISingleItem[]): any => {
-    let currentItem = shoppingCart.find(currentItem => currentItem.id === itemId)
-    if(currentItem && currentItem.qtyLimit >= inputValue && inputValue > 0) {
-        currentItem.qty = inputValue
-    } 
-    const newTotalCost = shoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
-    // const newTotalCost = shoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
-
-    return {
-        type: 'CHANGE_AMOUNT',
-        payload: {
-            shoppingCart: shoppingCart,
-            totalCost: newTotalCost
-        }
-    }   
-}
-export const deleteFromCart = (itemId: number, shoppingCart: ISingleItem[]): any => {
-    const newShoppingCart = shoppingCart.filter(item => item.id !== itemId)
-    const newTotalCost = newShoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
-    // const newTotalCost = newShoppingCart.reduce((sum, item) => sum + (item.qty * item.price), 0)
-    
-    return {
-        type: 'DELETE_FROM_CART',
-        payload: {
-            shoppingCart:  newShoppingCart,
-            totalCost: newTotalCost
-        }
-    } 
-}
-
-export const deleteOneItemQty = (itemId: number, shoppingCart: ISingleItem[]): any => {
-    let currentItem = shoppingCart.find(currentItem => currentItem.id === itemId)
+export const deleteFromCart = (product: ISingleItem, shoppingCart: ISingleItem[]): any => {
     shoppingCart.forEach((item, index) => {
-        if( item.id === currentItem?.id && item.qty > 1) {
-            const newQty = --item.qty   
-            item.qty = newQty     
-        } else if (item.id === currentItem?.id && item.qty === 1) {
-            shoppingCart.splice(index, 1)
+        if( item.id === product.id && item.qty === 0) {
+            shoppingCart.splice(index, 1)  
+        } else if (item.id === product.id) {
+            const newQty = product.qty   
+            item.qty = newQty   
         }
     })
-        // const newTotalCost = shoppingCart?.reduce((sum, item) => sum + (item.qty * item.price), 0)
+    
         const newTotalCost = shoppingCart.reduce((sum, item) => sum + ((item.qty % 2 === 0 ? item.qty * (item.price / 100 * 90) : item.qty * item.price)), 0)
 
     return {
-        type: 'DELETE_ONE_ITEM_QTY',
+        type: 'DELETE_FROM_CART',
         payload: {
             shoppingCart:  shoppingCart,
             totalCost: newTotalCost

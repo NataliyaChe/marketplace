@@ -12,7 +12,7 @@ function ShoppingCart() {
             <div className="container cart-wrap">
                 <h2 className="cart-title">Shopping cart:</h2>
                 {shoppingCart.map(item => 
-                    <ItemInCart product={item} />
+                    <ItemInCart product={item} key={item.id}/>
                 )}
                 <h3>Total: {totalCost}</h3>
                 <button className="button" onClick={submitOrder}>

@@ -2,47 +2,65 @@ import { ISingleItem } from "../types/item"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ItemActionCreators from '../store/actions/itemAction'
-import { useEffect, useState } from "react"
-import { deleteFromCart, addToCart, deleteOneItemQty, changeQty } from "../store/actions/itemAction"
+import { useState } from "react"
+import { deleteFromCart, addToCart} from "../store/actions/itemAction"
 
 interface IProductProps {
     product: ISingleItem,
 }
 
 const ItemInCart: React.FC<IProductProps> = (props: IProductProps) => {
-    const {id, title, price, qty, qtyLimit} = props.product
-    const {shoppingCart, loading, error, totalCost} = useTypedSelector(state => state.item)
+    let {id, title, price, qty, qtyLimit} = props.product
+    const {shoppingCart, totalCost} = useTypedSelector(state => state.item)
     const {deleteFromCart} = useActions(ItemActionCreators)
     const {addToCart} = useActions(ItemActionCreators)
-    const {deleteOneItemQty} = useActions(ItemActionCreators)
-    const {changeQty} = useActions(ItemActionCreators)
-    const [amount, setAmount] = useState('')
-
-    console.log('product', id);
-    
+    const [amount, setAmount] = useState(`${qty}`)
+    const [warning, setWarning] = useState(false)
 
     function deleteItem(event: any) {
-        const itemId = Number(event.target.dataset.id)
-        deleteFromCart(itemId, shoppingCart)    
+        const product = {
+            id, title, price, qtyLimit,
+            qty: 0,
+        }
+        setAmount(`${product.qty}`)
+        console.log('delete', product.qty);
+        deleteFromCart(product, shoppingCart)    
     }
 
     function reduceAmount(event: any) {
-        const itemId = Number(event.target.dataset.id)
-        deleteOneItemQty(itemId, shoppingCart)   
+        const product = {
+            id, title, price, qtyLimit,
+            qty: --qty,
+        }
+        setAmount(`${product.qty}`)
+        console.log('reduce', product.qty);
+        deleteFromCart(product, shoppingCart)   
     }
 
-    function increaseAmount(event: any) {
-        const itemId = Number(event.target.dataset.id)
-        const item = shoppingCart.find(item => item.id === Number(itemId)) 
-        addToCart(item, shoppingCart, totalCost)
+    function increaseAmount(event: any) { 
+        if(qty < qtyLimit) {
+            const product = {
+                id, title, price, qtyLimit,
+                qty: ++qty,
+            }  
+            if(qty === qtyLimit) {
+                setWarning(true) 
+                setTimeout(() => setWarning(false), 5000);
+            }
+            setAmount(`${product.qty}`)
+            console.log('increase', product.qty);
+            addToCart(product, shoppingCart, totalCost)
+        }
     }
 
     function changeAmount(event: any) {
-        console.log('target value', event.target.value);
-        const itemId = Number(event.target.dataset.id)
         setAmount(event.target.value)
-        // const inputValue = Number(event.target.value)
-        // changeQty(inputValue, itemId, shoppingCart, totalCost)   
+        const product = {
+            id, title, price, qtyLimit,
+            qty: event.target.value
+        }
+        console.log('change', product.qty);
+        addToCart(product, shoppingCart, totalCost) 
     }
 
     return (
@@ -68,7 +86,7 @@ const ItemInCart: React.FC<IProductProps> = (props: IProductProps) => {
                                 Discount 10%
                             </p>
                         }
-                        {qty === qtyLimit &&
+                        {warning &&
                             <p className={`warning`}>
                                 Quantity limit
                             </p>
