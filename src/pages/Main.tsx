@@ -3,9 +3,9 @@ import Pagination from "../components/Pagination"
 
 function Main() {
     return (
-        <div>
+        <div className="main container">
             <Itemlist />
-            {/* <Pagination /> */}
+            <Pagination />
         </div>
     )
 }

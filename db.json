@@ -1,44 +1,77 @@
 {
-    "items": [
-        { 
-            "id": 1,
-            "title": "Item 1",
-            "price": 120
-        },
-        { 
-            "id": 2,
-            "title": "Item 2",
-            "price": 150
-        },
-        { 
-            "id": 3,
-            "title": "Item 3",
-            "price": 80
-        },
-        { 
-            "id": 4,
-            "title": "Item 4",
-            "price": 65
-        },
-        { 
-            "id": 5,
-            "title": "Item 5",
-            "price": 185
-        },
-        { 
-            "id": 6,
-            "title": "Item 6",
-            "price": 132
-        },
-        { 
-            "id": 7,
-            "title": "Item 7",
-            "price": 87
-        },
-        { 
-            "id": 8,
-            "title": "Item 8",
-            "price": 103
-        }
-    ]
+  "items": [
+    {
+      "id": 1,
+      "title": "Item 1",
+      "price": 120,
+      "qtyLimit": 4,
+      "qty": 0
+    },
+    {
+      "id": 2,
+      "title": "Item 2",
+      "price": 150,
+      "qtyLimit": 2,
+      "qty": 0
+    },
+    {
+      "id": 3,
+      "title": "Item 3",
+      "price": 80,
+      "qtyLimit": 3,
+      "qty": 0
+    },
+    {
+      "id": 4,
+      "title": "Item 4",
+      "price": 65,
+      "qtyLimit": 4,
+      "qty": 0
+    },
+    {
+      "id": 5,
+      "title": "Item 5",
+      "price": 185,
+      "qtyLimit": 2,
+      "qty": 0
+    },
+    {
+      "id": 6,
+      "title": "Item 6",
+      "price": 132,
+      "qtyLimit": 3,
+      "qty": 0
+    },
+    {
+      "id": 7,
+      "title": "Item 7",
+      "price": 87,
+      "qtyLimit": 2,
+      "qty": 0
+    },
+    {
+      "id": 8,
+      "title": "Item 8",
+      "price": 103,
+      "qtyLimit": 5,
+      "qty": 0
+    },
+    {
+      "id": 9,
+      "title": "Item 9",
+      "price": 100,
+      "qtyLimit": 3,
+      "qty": 0
+    },
+    {
+      "id": 10,
+      "title": "Item 10",
+      "price": 130,
+      "qtyLimit": 2,
+      "qty": 0
+    }
+  ],
+  "cart": [
+    
+  ]
 }
