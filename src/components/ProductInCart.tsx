@@ -1,66 +1,61 @@
-import { ISingleItem } from "../types/item"
+import { ISingleProduct } from "../types/product"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
-import * as ItemActionCreators from '../store/actions/itemAction'
+import * as ProductActionCreators from '../store/actions/productAction'
 import { useState } from "react"
-import { deleteFromCart, addToCart} from "../store/actions/itemAction"
+import { changeProductQty} from "../store/actions/productAction"
 
 interface IProductProps {
-    product: ISingleItem,
+    product: ISingleProduct,
 }
 
-const ItemInCart: React.FC<IProductProps> = (props: IProductProps) => {
-    let {id, title, price, qty, qtyLimit} = props.product
-    const {shoppingCart, totalCost} = useTypedSelector(state => state.item)
-    const {deleteFromCart} = useActions(ItemActionCreators)
-    const {addToCart} = useActions(ItemActionCreators)
+function ItemInCart ({product}: IProductProps) {
+    let {id, title, price, qty, qtyLimit} = product
+    const {shoppingCart, totalCost} = useTypedSelector(state => state.product)
+    const {changeProductQty} = useActions(ProductActionCreators)
     const [amount, setAmount] = useState(`${qty}`)
     const [warning, setWarning] = useState(false)
 
-    function deleteItem(event: any) {
-        const product = {
-            id, title, price, qtyLimit,
+    function deleteProduct(event: any) {
+        const newProduct = {
+            ...product,
             qty: 0,
         }
-        setAmount(`${product.qty}`)
-        console.log('delete', product.qty);
-        deleteFromCart(product, shoppingCart)    
+        setAmount(`${newProduct.qty}`)
+        changeProductQty(newProduct, shoppingCart)    
     }
 
     function reduceAmount(event: any) {
-        const product = {
-            id, title, price, qtyLimit,
+        const newProduct = {
+            ...product,
             qty: --qty,
         }
-        setAmount(`${product.qty}`)
-        console.log('reduce', product.qty);
-        deleteFromCart(product, shoppingCart)   
+        setAmount(`${qty}`)
+        changeProductQty(newProduct, shoppingCart)   
     }
 
     function increaseAmount(event: any) { 
         if(qty < qtyLimit) {
-            const product = {
-                id, title, price, qtyLimit,
+            const newProduct = {
+                ...product,
                 qty: ++qty,
             }  
             if(qty === qtyLimit) {
                 setWarning(true) 
                 setTimeout(() => setWarning(false), 5000);
             }
-            setAmount(`${product.qty}`)
-            console.log('increase', product.qty);
-            addToCart(product, shoppingCart, totalCost)
+            setAmount(`${newProduct.qty}`)
+            changeProductQty(newProduct, shoppingCart, totalCost)
         }
     }
 
     function changeAmount(event: any) {
         setAmount(event.target.value)
-        const product = {
-            id, title, price, qtyLimit,
+        const newProduct = {
+            ...product,
             qty: event.target.value
         }
-        console.log('change', product.qty);
-        addToCart(product, shoppingCart, totalCost) 
+        changeProductQty(newProduct, shoppingCart, totalCost) 
     }
 
     return (
@@ -93,7 +88,7 @@ const ItemInCart: React.FC<IProductProps> = (props: IProductProps) => {
                         }
                     </div>
                 </div>
-                <button className="button" data-id={id} onClick={deleteItem}>
+                <button className="button" data-id={id} onClick={deleteProduct}>
                     Delete
                 </button>
             </div>

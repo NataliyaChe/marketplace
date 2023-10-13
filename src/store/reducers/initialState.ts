@@ -1,8 +1,8 @@
-import { ItemState } from "../../types/item"
+import { ProductState } from "../../types/product"
 
-export const initialState: ItemState = {
-    items: [],
-    item: {
+export const initialState: ProductState = {
+    products: [],
+    product: {
         id: null,
         title: '',
         price: 0,
@@ -12,11 +12,10 @@ export const initialState: ItemState = {
     loading: false,
     error: null,
     currentPage: 1,
-    itemsPerPage: 4,
-    firstItem: 0,
-    lastItem: 4,
+    productsPerPage: 4,
+    firstProduct: 0,
+    lastProduct: 4,
     modal: false,
     shoppingCart: [],
     totalCost: 0,
-    // inputValue: 0
 }

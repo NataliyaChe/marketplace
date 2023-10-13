@@ -1,11 +1,11 @@
-import { setModal } from "../store/actions/itemAction"
+import { setModal } from "../store/actions/productAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
-import * as ItemActionCreators from '../store/actions/itemAction'
+import * as ProductActionCreators from '../store/actions/productAction'
 import ShoppingCart from "./ShoppingCart"
 
 function Modal() {
-    const {setModal} = useActions(ItemActionCreators)
+    const {setModal} = useActions(ProductActionCreators)
 
     return (
         <>

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
-import { setModal } from "../store/actions/itemAction"
+import { setModal } from "../store/actions/productAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
-import * as ItemActionCreators from '../store/actions/itemAction'
+import * as ProductActionCreators from '../store/actions/productAction'
 import Badge from './Badge';
 
 function Header () {
-    const {setModal} = useActions(ItemActionCreators)
-    const {shoppingCart} = useTypedSelector(state => state.item)
+    const {setModal} = useActions(ProductActionCreators)
+    const {shoppingCart} = useTypedSelector(state => state.product)
     const cartLength = shoppingCart.length
 
     return (

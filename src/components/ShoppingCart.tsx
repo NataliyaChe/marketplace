@@ -1,21 +1,17 @@
 import { useTypedSelector } from "../hooks/useTypedSelector"
-import ItemInCart from "./ItemInCart"
+import ProductInCart from "./ProductInCart"
 
 function ShoppingCart() {
-    const {shoppingCart, loading, error, totalCost} = useTypedSelector(state => state.item)
-
-    const submitOrder = (event: any) => {
-        console.log('confirm click');    
-    }
+    const {shoppingCart, totalCost} = useTypedSelector(state => state.product)
 
     return (
             <div className="container cart-wrap">
                 <h2 className="cart-title">Shopping cart:</h2>
-                {shoppingCart.map(item => 
-                    <ItemInCart product={item} key={item.id}/>
+                {shoppingCart.map(product => 
+                    <ProductInCart product={product} key={product.id}/>
                 )}
                 <h3>Total: {totalCost}</h3>
-                <button className="button" onClick={submitOrder}>
+                <button className="button">
                     Confirm
                 </button>
             </div>
