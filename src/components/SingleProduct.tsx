@@ -4,7 +4,7 @@ import { useActions } from "../hooks/useActions"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useParams } from 'react-router-dom'
 
-const SingleProduct = () => {
+function SingleProduct() {
     const params = useParams();
     const productId = Number(params.id);
     const {getCurrentProduct} = useActions(ProductActionCreators)

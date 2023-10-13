@@ -4,7 +4,7 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useNavigate } from 'react-router-dom'
 
-const Productlist: React.FC = () => {
+function Productlist() {
     const {products, loading, error, currentPage, firstProduct, lastProduct,  shoppingCart} = useTypedSelector(state => state.product)
     const {fetchProducts} = useActions(ProductActionCreators)
     let navigate = useNavigate()
