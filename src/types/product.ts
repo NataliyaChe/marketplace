@@ -34,9 +34,6 @@ export enum ProductActionTypes {
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL',
     CHANGE_PRODUCT_QTY = 'CHANGE_PRODUCT_QTY',
-    // DELETE_FROM_CART = 'DELETE_FROM_CART',
-    // DELETE_ONE_ITEM_QTY = 'DELETE_ONE_ITEM_QTY',
-    // CHANGE_AMOUNT = 'CHANGE-AMOUNT'
 }
 
 interface FetchAction {
@@ -85,29 +82,5 @@ interface ChangeProductQtyAction {
         totalCost: number
     }
 }
-
-// interface DeleteFromCartAction {
-//     type: ItemActionTypes.DELETE_FROM_CART;
-//     payload: {
-//         shoppingCart: any[],
-//         totalCost: number
-//     }
-// }
-
-// interface deleteOneItemQtyAction {
-//     type: ItemActionTypes.DELETE_ONE_ITEM_QTY;
-//     payload: {
-//         shoppingCart: any[],
-//         totalCost: number
-//     }
-// }
-
-// interface changeAmountAction {
-//     type: ItemActionTypes.CHANGE_AMOUNT;
-//     payload: {
-//         shoppingCart: any[],
-//         totalCost: number
-//     }
-// }
 
 export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | GetCurrentProductAction | SetCurrentPageAction | SetModalAction | ChangeProductQtyAction 

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { setModal } from "../store/actions/productAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'

@@ -1,17 +1,15 @@
 import { useEffect } from "react"
-import { fetchProducts, getCurrentProduct, changeProductQty, setModal } from "../store/actions/productAction"
 import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useNavigate } from 'react-router-dom'
 
 const Productlist: React.FC = () => {
-    const {products, loading, error, currentPage, firstProduct, lastProduct,  shoppingCart, totalCost} = useTypedSelector(state => state.product)
+    const {products, loading, error, currentPage, firstProduct, lastProduct,  shoppingCart} = useTypedSelector(state => state.product)
     const {fetchProducts} = useActions(ProductActionCreators)
     let navigate = useNavigate()
     const {setModal} = useActions(ProductActionCreators)
-    // const {addToCart} = useActions(ProductActionCreators)
-
+    const {changeProductQty} = useActions(ProductActionCreators)
 
     useEffect(() => {
         fetchProducts(currentPage)
@@ -19,16 +17,21 @@ const Productlist: React.FC = () => {
 
     const paginatedProducts = (products.slice(firstProduct, lastProduct));
 
-    function getProduct(event: any) { 
+    function getProduct(event: React.BaseSyntheticEvent) { 
         const productId = event.target.dataset.id
         navigate(`/${productId}`)
     }
 
-    function addProduct(event: any) {
+    function addProduct(event: React.BaseSyntheticEvent) {
         const productId = event.target.dataset.id
-        const product = products.find(product => product.id === Number(productId) )
-        
-        changeProductQty(product, shoppingCart)
+        let product = shoppingCart.find(product => product.id === Number(productId))
+        if(product) {
+            product.qty = ++product.qty
+            changeProductQty(product, shoppingCart)
+        } else {
+            product = products.find(product => product.id === Number(productId))
+            changeProductQty(product, shoppingCart)
+        }
         setModal()       
     }
 

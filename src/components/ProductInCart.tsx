@@ -3,7 +3,6 @@ import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useState } from "react"
-import { changeProductQty} from "../store/actions/productAction"
 
 interface IProductProps {
     product: ISingleProduct,
@@ -11,12 +10,12 @@ interface IProductProps {
 
 function ItemInCart ({product}: IProductProps) {
     let {id, title, price, qty, qtyLimit} = product
-    const {shoppingCart, totalCost} = useTypedSelector(state => state.product)
+    const {shoppingCart} = useTypedSelector(state => state.product)
     const {changeProductQty} = useActions(ProductActionCreators)
     const [amount, setAmount] = useState(`${qty}`)
     const [warning, setWarning] = useState(false)
 
-    function deleteProduct(event: any) {
+    function deleteProduct(event: React.MouseEvent<HTMLButtonElement>) {
         const newProduct = {
             ...product,
             qty: 0,
@@ -25,7 +24,7 @@ function ItemInCart ({product}: IProductProps) {
         changeProductQty(newProduct, shoppingCart)    
     }
 
-    function reduceAmount(event: any) {
+    function reduceAmount(event: React.MouseEvent<HTMLButtonElement>) {
         const newProduct = {
             ...product,
             qty: --qty,
@@ -34,7 +33,7 @@ function ItemInCart ({product}: IProductProps) {
         changeProductQty(newProduct, shoppingCart)   
     }
 
-    function increaseAmount(event: any) { 
+    function increaseAmount(event: React.MouseEvent<HTMLButtonElement>) { 
         if(qty < qtyLimit) {
             const newProduct = {
                 ...product,
@@ -45,17 +44,17 @@ function ItemInCart ({product}: IProductProps) {
                 setTimeout(() => setWarning(false), 5000);
             }
             setAmount(`${newProduct.qty}`)
-            changeProductQty(newProduct, shoppingCart, totalCost)
+            changeProductQty(newProduct, shoppingCart)
         }
     }
 
-    function changeAmount(event: any) {
+    function changeAmount(event: React.BaseSyntheticEvent) {
         setAmount(event.target.value)
         const newProduct = {
             ...product,
             qty: event.target.value
         }
-        changeProductQty(newProduct, shoppingCart, totalCost) 
+        changeProductQty(newProduct, shoppingCart) 
     }
 
     return (

@@ -3,7 +3,6 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import { useActions } from "../hooks/useActions"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useParams } from 'react-router-dom'
-import { getCurrentProduct, changeProductQty, setModal } from '../store/actions/productAction'
 
 const SingleProduct = () => {
     const params = useParams();
@@ -17,7 +16,11 @@ const SingleProduct = () => {
         getCurrentProduct(productId)
     }, [])
     
-    function addProduct(event: any) {
+    function addProduct(event: React.MouseEvent<HTMLButtonElement>) {
+        let currentProduct = shoppingCart.find(currentProduct => currentProduct.id === product.id)
+        if(currentProduct) {
+            product.qty = ++currentProduct.qty 
+        }
         changeProductQty(product, shoppingCart)
         setModal()       
     }
