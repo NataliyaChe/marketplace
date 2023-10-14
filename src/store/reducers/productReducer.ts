@@ -49,42 +49,56 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                 ...state,
                 modal: !state.modal
             }
-        case ProductActionTypes.INCREASE_QTY:
-            return {
-                ...state,
-                shoppingCart: state.shoppingCart.map(product => {
-                    if(product.id !== action.payload) {
-                        return product
-                    }
-                    return {
-                        ...product,
-                        qty: ++product.qty
-                    }
-                })
-            }
         case ProductActionTypes.ADD_PRODUCT:
-            return {
-                ...state,
-                shoppingCart: state.shoppingCart.push(action.payload)
-            }
-        case ProductActionTypes.REDUCE_QTY:
-            return {
-                ...state,
-                shoppingCart: state.shoppingCart.map(product => {
-                    if(product.id !== action.payload) {
-                        return product
-                    }
+            let currentProduct = state.shoppingCart.find(product => product.id === action.payload)
+            if(currentProduct) {
+                return {
+                    ...state,
+                    shoppingCart: state.shoppingCart.map(product => {
+                        if(product.id === action.payload && product.qty < product.qtyLimit) {
+                            return {
+                                ...product,
+                                qty: ++product.qty
+                            }  
+                        } else {
+                            return product  
+                        }
+                    })
+                } 
+            } else {
+                currentProduct = state.products.find(product => product.id === action.payload) 
+                if(currentProduct) {
                     return {
-                        ...product,
-                        qty: --product.qty
+                        ...state,
+                        shoppingCart: state.shoppingCart.concat({...currentProduct, qty: 1})
+                    } 
+                } else {
+                    return {
+                        ...state,
+                        shoppingCart: state.shoppingCart
                     }
-                })
+                }
             }
-        // case ProductActionTypes.REMOVE_PRODUCT:
-        //     return {
-        //         ...state,
-        //         shoppingCart: 
-        //     }
+        case ProductActionTypes.REDUCE_QTY:  
+            return {
+                ...state,
+                shoppingCart: (  
+                    state.shoppingCart.map(product => {
+                        if(product.id !== action.payload) {
+                            return product
+                        }
+                        return {
+                            ...product,
+                            qty: --product.qty
+                        }
+                    })
+                )
+            }
+        case ProductActionTypes.REMOVE_PRODUCT:
+            return {
+                ...state,
+                shoppingCart: state.shoppingCart.filter(product => product.id !== action.payload)
+            }
         case ProductActionTypes.CHANGE_QTY:
             return {
                 ...state,

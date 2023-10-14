@@ -9,7 +9,7 @@ function Productlist() {
     const {fetchProducts} = useActions(ProductActionCreators)
     let navigate = useNavigate()
     const {setModal} = useActions(ProductActionCreators)
-    const {increaseQty} = useActions(ProductActionCreators)
+    const {addProduct} = useActions(ProductActionCreators)
 
     useEffect(() => {
         fetchProducts(currentPage)
@@ -22,15 +22,11 @@ function Productlist() {
         navigate(`/${productId}`)
     }
 
-    function addProduct(event: React.BaseSyntheticEvent) {
+    function addToCart(event: React.BaseSyntheticEvent) {
         const productId = Number(event.target.dataset.id)
-        shoppingCart.map(product => {
-            if(product.id !== productId) {
-                increaseQty(productId)
-            }
-            console.log('add product');    
-        })
-        setModal()            
+        addProduct(productId)
+        setModal() 
+        console.log('shoppingCart add', shoppingCart);                
     }
 
     if(loading) {
@@ -40,7 +36,7 @@ function Productlist() {
     if(error) {
         return <h1>{error}</h1>
     }
-    
+
     return (
         <div className="itemlist">
             {paginatedProducts.map(targetProduct =>
@@ -50,7 +46,7 @@ function Productlist() {
                         <button data-id={targetProduct.id} className="button" onClick={getProduct}>
                             More
                         </button>
-                        <button data-id={targetProduct.id} className="button" onClick={addProduct}>
+                        <button data-id={targetProduct.id} className="button" onClick={addToCart}>
                             Add to cart
                         </button>
                     </div>

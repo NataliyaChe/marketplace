@@ -22,11 +22,10 @@ export const fetchCurrentProduct = (productId: number | undefined): any => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
             const response = await axios.get(`http://localhost:3004/items?id=${productId}`)
-            const {id, title, price, qty, qtyLimit} = response.data[0]
-            const singleProduct = {id, title, price, qty, qtyLimit}          
+            const [data] = response.data       
             dispatch({
                 type: ProductActionTypes.FETCH_CURRENT_PRODUCT, 
-                payload: singleProduct
+                payload: data
             })  
         } catch (e) {
             dispatch({
@@ -54,17 +53,10 @@ export const setModal = () => {
     }
 }
 
-export const increaseQty = (productId: number) => {
-    return {
-        type: ProductActionTypes.INCREASE_QTY,
-        payload: productId
-    }
-}
-
-export const addProduct = (product: ISingleProduct) => {
+export const addProduct = (productId: number) => {
     return {
         type: ProductActionTypes.ADD_PRODUCT,
-        payload: product
+        payload: productId
     }
 }
 
@@ -75,12 +67,12 @@ export const reduceQty = (productId: number) => {
     }
 }
 
-// export const removeProduct = (productId: number) => {
-//     return {
-//         type: ProductActionTypes.REMOVE_PRODUCT,
-//         payload: productId
-//     }
-// }
+export const removeProduct = (productId: number) => {
+    return {
+        type: ProductActionTypes.REMOVE_PRODUCT,
+        payload: productId
+    }
+}
 
 export const changeQty = (productId: number, newQty: number) => {
     return {

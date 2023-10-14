@@ -69,7 +69,7 @@ interface SetModalAction {
 
 interface AddProductAction {
     type: ProductActionTypes.ADD_PRODUCT;
-    payload: ISingleProduct
+    payload: number
 }
 
 interface IncreaseQtyAction {
@@ -84,7 +84,7 @@ interface ReduceQtyAction {
 
 interface RemoveProductAction {
     type: ProductActionTypes.REMOVE_PRODUCT;
-    payload: ISingleProduct[]
+    payload: number
 }
 
 interface ChangeQtyAction {

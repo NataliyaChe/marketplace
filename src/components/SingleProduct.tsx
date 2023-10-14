@@ -10,26 +10,20 @@ function SingleProduct() {
     const {fetchCurrentProduct} = useActions(ProductActionCreators)
     const {product, shoppingCart} = useTypedSelector(state => state.product)
     const {setModal} = useActions(ProductActionCreators)
-    const {id, title, price, qty, qtyLimit} = product
-    const {increaseQty} = useActions(ProductActionCreators)
     const {addProduct} = useActions(ProductActionCreators)
 
     useEffect(() => {
+        console.log('shoppingCart',  productId);
         fetchCurrentProduct(productId)
     }, [])
+    console.log('shoppingCart', shoppingCart, productId);
     
     function addToCart(event: React.MouseEvent<HTMLButtonElement>) {
-        shoppingCart.map(product => {
-            if(product.id !== id) {
-                increaseQty(id)
-            }
-            console.log('add product');
-            addProduct(product)
-            
-        })
-        setModal()       
+        addProduct(productId)
+        setModal() 
+        console.log('shoppingCart add', shoppingCart);      
     }
-
+    
     return (
         <div className="container">
             <h2>{product.title}</h2>
