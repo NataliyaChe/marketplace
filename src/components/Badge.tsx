@@ -1,7 +1,7 @@
 import { useTypedSelector } from "../hooks/useTypedSelector"
 
 function Badge () {
-    const {shoppingCart} = useTypedSelector(state => state.item)
+    const {shoppingCart} = useTypedSelector(state => state.product)
     
     return (
         <div className="badge">

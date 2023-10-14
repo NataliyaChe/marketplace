@@ -1,19 +1,17 @@
 import ReactPaginate from 'react-paginate';
-import * as ItemActionCreators from '../store/actions/itemAction'
+import * as ProductActionCreators from '../store/actions/productAction'
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { useActions } from "../hooks/useActions"
-import { setCurrentPage } from "../store/actions/itemAction"
 
 function Pagination() {
-    const {items, currentPage, itemsPerPage} = useTypedSelector(state => state.item)
-    const {setCurrentPage} = useActions(ItemActionCreators)
-    const totalPages = Math.ceil(items.length / itemsPerPage)
-    const changePage = (event: any) => {
-        console.log('event', event);
+    const {products, productsPerPage} = useTypedSelector(state => state.product)
+    const {setCurrentPage} = useActions(ProductActionCreators)
+    const totalPages = Math.ceil(products.length / productsPerPage)
+    const changePage = (event: any) => { 
         const currentPage = event.selected+1
-        const firstItem = event.selected * itemsPerPage
-        const lastItem = firstItem + itemsPerPage
-        setCurrentPage(currentPage, firstItem, lastItem)
+        const firstProduct = event.selected * productsPerPage
+        const lastProduct = firstProduct + productsPerPage
+        setCurrentPage(currentPage, firstProduct, lastProduct)
     }
 
     return (

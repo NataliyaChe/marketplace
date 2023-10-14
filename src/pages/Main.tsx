@@ -1,10 +1,10 @@
-import Itemlist from "../components/Itemlist"
+import Productlist from "../components/Productlist"
 import Pagination from "../components/Pagination"
 
 function Main() {
     return (
         <div className="main container">
-            <Itemlist />
+            <Productlist />
             <Pagination />
         </div>
     )
