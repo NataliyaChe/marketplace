@@ -9,7 +9,7 @@ function SingleProduct() {
     const productId = Number(params.id);
     const {getCurrentProduct} = useActions(ProductActionCreators)
     const {product, shoppingCart} = useTypedSelector(state => state.product)
-    const {changeProductQty} = useActions(ProductActionCreators)
+    const {updateShoppingCart} = useActions(ProductActionCreators)
     const {setModal} = useActions(ProductActionCreators)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ function SingleProduct() {
         if(currentProduct) {
             product.qty = ++currentProduct.qty 
         }
-        changeProductQty(product, shoppingCart)
+        updateShoppingCart(product, shoppingCart)
         setModal()       
     }
 

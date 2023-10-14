@@ -17,7 +17,7 @@ export const fetchProducts = (currentPage: number): any => {
     }
 }
 
-export const getCurrentProduct = (productId: number | undefined): any => {
+export const fetchCurrentProduct = (productId: number | undefined): any => {
     return async (dispatch: Dispatch<ProductAction>) => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
@@ -31,7 +31,7 @@ export const getCurrentProduct = (productId: number | undefined): any => {
                 qtyLimit: data[0].qtyLimit
             }          
             dispatch({
-                type: ProductActionTypes.GET_CURRENT_PRODUCT, 
+                type: ProductActionTypes.FETCH_CURRENT_PRODUCT, 
                 payload: singleProduct
             })  
         } catch (e) {
@@ -45,7 +45,7 @@ export const getCurrentProduct = (productId: number | undefined): any => {
 
 export const setCurrentPage = (currentPage: number, firstProduct: number, lastProduct: number): any => {
     return {
-        type: 'SET_CURRENT_PAGE',
+        type: ProductActionTypes.SET_CURRENT_PAGE,
         payload: {
             currentPage: currentPage,
             firstProduct: firstProduct,
@@ -56,17 +56,17 @@ export const setCurrentPage = (currentPage: number, firstProduct: number, lastPr
 
 export const setModal = () => {
     return {
-        type: 'SET_MODAL',
+        type: ProductActionTypes.SET_MODAL,
     }
 }
 
-export const changeProductQty = (product: ISingleProduct, shoppingCart: ISingleProduct[]): any => {
+export const updateShoppingCart = (product: ISingleProduct, shoppingCart: ISingleProduct[]): any => {
     let currentProduct = shoppingCart.find(currentProduct => currentProduct.id === product.id)
     if(currentProduct) {
         const newQty = product.qty
         if( newQty === 0) {
             shoppingCart.forEach((item, index) => {
-                if(item == currentProduct){
+                if(item.id === currentProduct?.id){
                     shoppingCart.splice(index, 1)  
                 }
             })
@@ -81,10 +81,11 @@ export const changeProductQty = (product: ISingleProduct, shoppingCart: ISingleP
     const newTotalCost = shoppingCart.reduce((sum, {qty, price}) => sum + (qty % 2 === 0 ? qty * (price / 100 * 90) : qty * price), 0)
 
     return {
-        type: 'CHANGE_PRODUCT_QTY',
+        type: ProductActionTypes.UPDATE_SHOPPING_CART,
         payload: {
             shoppingCart: shoppingCart,
             totalCost: newTotalCost
         }
     }   
 }
+

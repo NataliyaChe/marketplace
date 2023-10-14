@@ -4,7 +4,7 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import { useActions } from "../hooks/useActions"
 
 function Pagination() {
-    const {products, currentPage, productsPerPage} = useTypedSelector(state => state.product)
+    const {products, productsPerPage} = useTypedSelector(state => state.product)
     const {setCurrentPage} = useActions(ProductActionCreators)
     const totalPages = Math.ceil(products.length / productsPerPage)
     const changePage = (event: any) => { 

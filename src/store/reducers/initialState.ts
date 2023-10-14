@@ -1,6 +1,6 @@
-import { ProductState } from "../../types/product"
+import { IProductState } from "../../types/product"
 
-export const initialState: ProductState = {
+export const initialState: IProductState = {
     products: [],
     product: {
         id: null,

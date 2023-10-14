@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Main from "./pages/Main";
 import {BrowserRouter,  Routes, Route } from 'react-router-dom';
 import SingleProduct from "./components/SingleProduct";
-import Modal from "./components/Modal";
+import ShoppingCartModal from "./components/ShoppingCartModal";
 import { useTypedSelector } from "./hooks/useTypedSelector"
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
           <Route path='/' element={<Main />} />
           <Route path='/:id' element={<SingleProduct />} />
         </Routes>
-        {modal && <Modal />}
+        {modal && <ShoppingCartModal />}
       </div>
     </BrowserRouter>
   );

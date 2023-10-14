@@ -1,12 +1,6 @@
-export interface ProductState {
-    products: any[];
-    product: {
-        id: null | number,
-        title: string,
-        price: number,
-        qty:  number,
-        qtyLimit: number
-    };
+export interface IProductState {
+    products: ISingleProduct[];
+    product: ISingleProduct;
     loading: boolean;
     error: null | string;
     productsPerPage: number;
@@ -30,10 +24,10 @@ export enum ProductActionTypes {
     FETCH_START = 'FETCH_START',
     FETCH_PRODUCTLIST = 'FETCH_PRODUCTLIST',
     FETCH_ERROR = 'FETCH_ERROR',
-    GET_CURRENT_PRODUCT = 'GET_CURRENT_PRODUCT',
+    FETCH_CURRENT_PRODUCT = 'FETCH_CURRENT_PRODUCT',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL',
-    CHANGE_PRODUCT_QTY = 'CHANGE_PRODUCT_QTY',
+    UPDATE_SHOPPING_CART = 'UPDATE_SHOPPING_CART',
 }
 
 interface FetchAction {
@@ -50,15 +44,9 @@ interface FetchErrorAction {
     payload: string;
 }
 
-interface GetCurrentProductAction {
-    type: ProductActionTypes.GET_CURRENT_PRODUCT;
-    payload: {
-        id: null | number,
-        title: string,
-        price: number,
-        qty: number,
-        qtyLimit: number
-    };
+interface FetchCurrentProductAction {
+    type: ProductActionTypes.FETCH_CURRENT_PRODUCT;
+    payload: ISingleProduct;
 }
 
 interface SetCurrentPageAction {
@@ -75,12 +63,12 @@ interface SetModalAction {
     payload: boolean;
 }
 
-interface ChangeProductQtyAction {
-    type: ProductActionTypes.CHANGE_PRODUCT_QTY;
+interface UpdateShoppingCartAction {
+    type: ProductActionTypes.UPDATE_SHOPPING_CART;
     payload: {
-        shoppingCart: any[];
+        shoppingCart: ISingleProduct[];
         totalCost: number
     }
 }
 
-export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | GetCurrentProductAction | SetCurrentPageAction | SetModalAction | ChangeProductQtyAction 
+export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | FetchCurrentProductAction | SetCurrentPageAction | SetModalAction | UpdateShoppingCartAction 

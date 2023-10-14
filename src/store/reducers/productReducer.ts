@@ -1,8 +1,8 @@
 import { ProductActionTypes, ProductAction } from "../../types/product";
 import { initialState } from "./initialState";
-import { ProductState } from "../../types/product"
+import { IProductState } from "../../types/product"
 
-export const productReducer = (state = initialState, action: ProductAction): ProductState => {
+export const productReducer = (state = initialState, action: ProductAction): IProductState => {
     switch(action.type) {
         case ProductActionTypes.FETCH_START:
             return { 
@@ -24,7 +24,7 @@ export const productReducer = (state = initialState, action: ProductAction): Pro
                 error: action.payload, 
                 products: [] 
             }
-        case ProductActionTypes.GET_CURRENT_PRODUCT:
+        case ProductActionTypes.FETCH_CURRENT_PRODUCT:
             return { 
                 ...state, 
                 loading: false, 
@@ -49,7 +49,7 @@ export const productReducer = (state = initialState, action: ProductAction): Pro
                 ...state,
                 modal: !state.modal
             }
-        case ProductActionTypes.CHANGE_PRODUCT_QTY:
+        case ProductActionTypes.UPDATE_SHOPPING_CART:
             return {
                 ...state,
                 shoppingCart: action.payload.shoppingCart,

@@ -9,7 +9,7 @@ function Productlist() {
     const {fetchProducts} = useActions(ProductActionCreators)
     let navigate = useNavigate()
     const {setModal} = useActions(ProductActionCreators)
-    const {changeProductQty} = useActions(ProductActionCreators)
+    const {updateShoppingCart} = useActions(ProductActionCreators)
 
     useEffect(() => {
         fetchProducts(currentPage)
@@ -23,14 +23,14 @@ function Productlist() {
     }
 
     function addProduct(event: React.BaseSyntheticEvent) {
-        const productId = event.target.dataset.id
-        let product = shoppingCart.find(product => product.id === Number(productId))
+        const productId = Number(event.target.dataset.id)
+        let product = shoppingCart.find(product => product.id === productId)
         if(product) {
             product.qty = ++product.qty
-            changeProductQty(product, shoppingCart)
+            updateShoppingCart(product, shoppingCart)
         } else {
-            product = products.find(product => product.id === Number(productId))
-            changeProductQty(product, shoppingCart)
+            product = products.find(product => product.id === productId)
+            updateShoppingCart(product, shoppingCart)
         }
         setModal()       
     }
