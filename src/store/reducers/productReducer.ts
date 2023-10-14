@@ -49,11 +49,54 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                 ...state,
                 modal: !state.modal
             }
-        case ProductActionTypes.UPDATE_SHOPPING_CART:
+        case ProductActionTypes.INCREASE_QTY:
             return {
                 ...state,
-                shoppingCart: action.payload.shoppingCart,
-                totalCost: action.payload.totalCost
+                shoppingCart: state.shoppingCart.map(product => {
+                    if(product.id !== action.payload) {
+                        return product
+                    }
+                    return {
+                        ...product,
+                        qty: ++product.qty
+                    }
+                })
+            }
+        case ProductActionTypes.ADD_PRODUCT:
+            return {
+                ...state,
+                shoppingCart: state.shoppingCart.push(action.payload)
+            }
+        case ProductActionTypes.REDUCE_QTY:
+            return {
+                ...state,
+                shoppingCart: state.shoppingCart.map(product => {
+                    if(product.id !== action.payload) {
+                        return product
+                    }
+                    return {
+                        ...product,
+                        qty: --product.qty
+                    }
+                })
+            }
+        // case ProductActionTypes.REMOVE_PRODUCT:
+        //     return {
+        //         ...state,
+        //         shoppingCart: 
+        //     }
+        case ProductActionTypes.CHANGE_QTY:
+            return {
+                ...state,
+                shoppingCart: state.shoppingCart.map(product => {
+                    if(product.id !== action.payload.id) {
+                        return product
+                    }
+                    return {
+                        ...product,
+                        qty: action.payload.newQty
+                    }
+                })
             }
         default:
             return state

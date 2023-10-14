@@ -11,80 +11,61 @@ interface IProductProps {
 function ShoppingCartItem ({product}: IProductProps) {
     let {id, title, price, qty, qtyLimit} = product
     const {shoppingCart} = useTypedSelector(state => state.product)
-    const {updateShoppingCart} = useActions(ProductActionCreators)
+    const {increaseQty} = useActions(ProductActionCreators)
+    const {reduceQty} = useActions(ProductActionCreators)
+    const {changeQty} = useActions(ProductActionCreators)
     const [amount, setAmount] = useState(`${qty}`)
     const [warning, setWarning] = useState(false)
 
-    function deleteProduct(event: React.MouseEvent<HTMLButtonElement>) {
-        const newProduct = {
-            ...product,
-            qty: 0,
-        }
-        setAmount(`${newProduct.qty}`)
-        updateShoppingCart(newProduct, shoppingCart)    
-    }
 
-    function reduceAmount(event: React.MouseEvent<HTMLButtonElement>) {
-        const newProduct = {
-            ...product,
-            qty: --qty,
-        }
-        setAmount(`${qty}`)
-        updateShoppingCart(newProduct, shoppingCart)   
+
+    function deleteProduct(event: React.MouseEvent<HTMLButtonElement>) {
+        console.log('delete product');
+          
     }
 
     function increaseAmount(event: React.MouseEvent<HTMLButtonElement>) { 
         if(qty < qtyLimit) {
-            const newProduct = {
-                ...product,
-                qty: ++qty,
-            }  
+            increaseQty(id)
+            setAmount(`${++qty}`)
             if(qty === qtyLimit) {
                 setWarning(true) 
                 setTimeout(() => setWarning(false), 5000);
             }
-            setAmount(`${newProduct.qty}`)
-            updateShoppingCart(newProduct, shoppingCart)
+        } else {
+            setWarning(true) 
+            setTimeout(() => setWarning(false), 5000);
         }
     }
 
+    
+    function reduceAmount(event: React.MouseEvent<HTMLButtonElement>) {
+        if(qty > 1) {
+            reduceQty(id)
+            setAmount(`${--qty}`)
+        } else {
+            console.log('delete');  
+        }
+    }
+
+
     function changeAmount(event: React.BaseSyntheticEvent) {
         const newQty = Number(event.target.value)
-        setAmount(event.target.value)
-        if(newQty < qtyLimit && newQty > 0) {
-            const newProduct = {
-                ...product,
-                qty: newQty
-            } 
-            updateShoppingCart(newProduct, shoppingCart) 
-        } else if (newQty === qtyLimit) {
-            setAmount(`${newQty}`)
+        setAmount(`${newQty}`)
+        if(newQty <= qtyLimit && newQty > 0) {
+            changeQty(id, newQty)
+            // setAmount(`${newQty}`)
+            if(newQty === qtyLimit) {
+                setWarning(true) 
+                setTimeout(() => setWarning(false), 5000);
+            }
+        } else if (newQty > qtyLimit) {
+            changeQty(id, qtyLimit)
+            setAmount(`${qtyLimit}`)
             setWarning(true) 
             setTimeout(() => setWarning(false), 5000);
-        } else if(newQty > qtyLimit) {
-            setAmount(`${qty}`)
-            setWarning(true) 
-            setTimeout(() => setWarning(false), 5000);
-        }
-        
+        } 
     }
-    
-    // function changeAmount(event: React.BaseSyntheticEvent) {
-    //     const newQty = Number(event.target.value)
-    //     if(newQty < qtyLimit) {
-    //         setAmount(`${newQty}`)
-    //         const newProduct = {
-    //             ...product,
-    //             qty: newQty
-    //         }
-    //         updateShoppingCart(newProduct, shoppingCart) 
-    //     } else {
-    //         setAmount(`${qty}`)
-    //         setWarning(true) 
-    //         setTimeout(() => setWarning(false), 5000);
-    //     }
-        
-    // }
 
     return (
         <div key={id} className="item-container">

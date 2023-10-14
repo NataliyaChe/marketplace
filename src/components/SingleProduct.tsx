@@ -7,28 +7,33 @@ import { useParams } from 'react-router-dom'
 function SingleProduct() {
     const params = useParams();
     const productId = Number(params.id);
-    const {getCurrentProduct} = useActions(ProductActionCreators)
+    const {fetchCurrentProduct} = useActions(ProductActionCreators)
     const {product, shoppingCart} = useTypedSelector(state => state.product)
-    const {updateShoppingCart} = useActions(ProductActionCreators)
     const {setModal} = useActions(ProductActionCreators)
+    const {id, title, price, qty, qtyLimit} = product
+    const {increaseQty} = useActions(ProductActionCreators)
+    const {addProduct} = useActions(ProductActionCreators)
 
     useEffect(() => {
-        getCurrentProduct(productId)
+        fetchCurrentProduct(productId)
     }, [])
     
-    function addProduct(event: React.MouseEvent<HTMLButtonElement>) {
-        let currentProduct = shoppingCart.find(currentProduct => currentProduct.id === product.id)
-        if(currentProduct) {
-            product.qty = ++currentProduct.qty 
-        }
-        updateShoppingCart(product, shoppingCart)
+    function addToCart(event: React.MouseEvent<HTMLButtonElement>) {
+        shoppingCart.map(product => {
+            if(product.id !== id) {
+                increaseQty(id)
+            }
+            console.log('add product');
+            addProduct(product)
+            
+        })
         setModal()       
     }
 
     return (
         <div className="container">
             <h2>{product.title}</h2>
-            <button data-id={product.id} className="button" onClick={addProduct}>
+            <button data-id={product.id} className="button" onClick={addToCart}>
                 Add to cart
             </button>
         </div>

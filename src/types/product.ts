@@ -27,7 +27,11 @@ export enum ProductActionTypes {
     FETCH_CURRENT_PRODUCT = 'FETCH_CURRENT_PRODUCT',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL',
-    UPDATE_SHOPPING_CART = 'UPDATE_SHOPPING_CART',
+    ADD_PRODUCT = 'ADD_PRODUCT',
+    INCREASE_QTY = 'INCREASE_QTY',
+    REDUCE_QTY = 'REDUCE_QTY',
+    REMOVE_PRODUCT = 'REMOVE_PRODUCT',
+    CHANGE_QTY = 'CHANGE_QTY'
 }
 
 interface FetchAction {
@@ -63,12 +67,32 @@ interface SetModalAction {
     payload: boolean;
 }
 
-interface UpdateShoppingCartAction {
-    type: ProductActionTypes.UPDATE_SHOPPING_CART;
+interface AddProductAction {
+    type: ProductActionTypes.ADD_PRODUCT;
+    payload: ISingleProduct
+}
+
+interface IncreaseQtyAction {
+    type: ProductActionTypes.INCREASE_QTY;
+    payload: number | null
+}
+
+interface ReduceQtyAction {
+    type: ProductActionTypes.REDUCE_QTY;
+    payload: number | null
+}
+
+interface RemoveProductAction {
+    type: ProductActionTypes.REMOVE_PRODUCT;
+    payload: ISingleProduct[]
+}
+
+interface ChangeQtyAction {
+    type: ProductActionTypes.CHANGE_QTY;
     payload: {
-        shoppingCart: ISingleProduct[];
-        totalCost: number
+        id: number;
+        newQty: number;
     }
 }
 
-export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | FetchCurrentProductAction | SetCurrentPageAction | SetModalAction | UpdateShoppingCartAction 
+export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | FetchCurrentProductAction | SetCurrentPageAction | SetModalAction | AddProductAction | IncreaseQtyAction | ReduceQtyAction | RemoveProductAction | ChangeQtyAction

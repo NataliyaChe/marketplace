@@ -22,14 +22,8 @@ export const fetchCurrentProduct = (productId: number | undefined): any => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
             const response = await axios.get(`http://localhost:3004/items?id=${productId}`)
-            const data = response.data
-            const singleProduct = {
-                id: data[0].id,
-                title: data[0].title,
-                price: data[0].price,
-                qty: data[0].qty,
-                qtyLimit: data[0].qtyLimit
-            }          
+            const {id, title, price, qty, qtyLimit} = response.data[0]
+            const singleProduct = {id, title, price, qty, qtyLimit}          
             dispatch({
                 type: ProductActionTypes.FETCH_CURRENT_PRODUCT, 
                 payload: singleProduct
@@ -60,32 +54,40 @@ export const setModal = () => {
     }
 }
 
-export const updateShoppingCart = (product: ISingleProduct, shoppingCart: ISingleProduct[]): any => {
-    let currentProduct = shoppingCart.find(currentProduct => currentProduct.id === product.id)
-    if(currentProduct) {
-        const newQty = product.qty
-        if( newQty === 0) {
-            shoppingCart.forEach((item, index) => {
-                if(item.id === currentProduct?.id){
-                    shoppingCart.splice(index, 1)  
-                }
-            })
-        } else {
-            currentProduct.qty = newQty 
-        } 
-    } else if (!currentProduct) {
-        currentProduct = {...product, qty: 1}
-        shoppingCart.push(currentProduct)
-    }
-
-    const newTotalCost = shoppingCart.reduce((sum, {qty, price}) => sum + (qty % 2 === 0 ? qty * (price / 100 * 90) : qty * price), 0)
-
+export const increaseQty = (productId: number) => {
     return {
-        type: ProductActionTypes.UPDATE_SHOPPING_CART,
-        payload: {
-            shoppingCart: shoppingCart,
-            totalCost: newTotalCost
-        }
-    }   
+        type: ProductActionTypes.INCREASE_QTY,
+        payload: productId
+    }
 }
 
+export const addProduct = (product: ISingleProduct) => {
+    return {
+        type: ProductActionTypes.ADD_PRODUCT,
+        payload: product
+    }
+}
+
+export const reduceQty = (productId: number) => {
+    return {
+        type: ProductActionTypes.REDUCE_QTY,
+        payload: productId
+    }
+}
+
+// export const removeProduct = (productId: number) => {
+//     return {
+//         type: ProductActionTypes.REMOVE_PRODUCT,
+//         payload: productId
+//     }
+// }
+
+export const changeQty = (productId: number, newQty: number) => {
+    return {
+        type: ProductActionTypes.CHANGE_QTY,
+        payload: {
+            productId: productId,
+            newQty: newQty
+        }
+    }
+}
