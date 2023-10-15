@@ -43,10 +43,11 @@ function ShoppingCartItem ({product}: IProductProps) {
     }
 
     function changeAmount(event: React.BaseSyntheticEvent) {
+        setAmount('')
         const newQty = Number(event.target.value)
-        setAmount(`${newQty}`)
         if(newQty <= qtyLimit && newQty > 0) {
             changeQty(id, newQty)
+            setAmount(`${newQty}`)
             if(newQty === qtyLimit) {
                 setWarning(true) 
                 setTimeout(() => setWarning(false), 5000);

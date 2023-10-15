@@ -75,10 +75,12 @@ export const removeProduct = (productId: number) => {
 }
 
 export const changeQty = (productId: number, newQty: number) => {
+    console.log('newQty', newQty, productId);
+    
     return {
         type: ProductActionTypes.CHANGE_QTY,
         payload: {
-            productId: productId,
+            id: productId,
             newQty: newQty
         }
     }
