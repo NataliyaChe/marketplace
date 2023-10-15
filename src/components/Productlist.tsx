@@ -21,12 +21,11 @@ function Productlist() {
         const productId = event.target.dataset.id
         navigate(`/${productId}`)
     }
-
+   
     function addToCart(event: React.BaseSyntheticEvent) {
         const productId = Number(event.target.dataset.id)
         addProduct(productId)
-        setModal() 
-        console.log('shoppingCart add', shoppingCart);                
+        setModal()            
     }
 
     if(loading) {

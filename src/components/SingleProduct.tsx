@@ -8,20 +8,19 @@ function SingleProduct() {
     const params = useParams();
     const productId = Number(params.id);
     const {fetchCurrentProduct} = useActions(ProductActionCreators)
-    const {product, shoppingCart} = useTypedSelector(state => state.product)
+    const {product, shoppingCart, products} = useTypedSelector(state => state.product)
     const {setModal} = useActions(ProductActionCreators)
     const {addProduct} = useActions(ProductActionCreators)
+    const {fetchProducts} = useActions(ProductActionCreators)
 
     useEffect(() => {
-        console.log('shoppingCart',  productId);
         fetchCurrentProduct(productId)
+        fetchProducts()
     }, [])
-    console.log('shoppingCart', shoppingCart, productId);
     
     function addToCart(event: React.MouseEvent<HTMLButtonElement>) {
         addProduct(productId)
-        setModal() 
-        console.log('shoppingCart add', shoppingCart);      
+        setModal()   
     }
     
     return (

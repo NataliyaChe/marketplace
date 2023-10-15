@@ -74,8 +74,7 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                     } 
                 } else {
                     return {
-                        ...state,
-                        shoppingCart: state.shoppingCart
+                        ...state
                     }
                 }
             }
