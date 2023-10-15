@@ -1,6 +1,5 @@
 import { ISingleProduct } from "../types/product"
 import { useActions } from "../hooks/useActions"
-import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useState } from "react"
 
@@ -10,7 +9,6 @@ interface IProductProps {
 
 function ShoppingCartItem ({product}: IProductProps) {
     let {id, title, price, qty, qtyLimit} = product
-    const {shoppingCart} = useTypedSelector(state => state.product)
     const {addProduct} = useActions(ProductActionCreators)
     const {reduceQty} = useActions(ProductActionCreators)
     const {changeQty} = useActions(ProductActionCreators)

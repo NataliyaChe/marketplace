@@ -17,5 +17,4 @@ export const initialState: IProductState = {
     lastProduct: 4,
     modal: false,
     shoppingCart: [],
-    totalCost: 0,
 }

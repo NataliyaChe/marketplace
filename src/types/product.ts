@@ -9,7 +9,6 @@ export interface IProductState {
     lastProduct: number;
     modal: boolean;
     shoppingCart:  ISingleProduct[],
-    totalCost: number,
 }
 
 export interface ISingleProduct {
