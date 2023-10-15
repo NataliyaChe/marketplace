@@ -10,7 +10,7 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                 loading: true, 
                 error: null,
             }
-        case ProductActionTypes.FETCH_PRODUCTLIST:
+        case ProductActionTypes.FETCH_PRODUCT_LIST:
             return { 
                 ...state, 
                 loading: false, 
@@ -29,13 +29,7 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                 ...state, 
                 loading: false, 
                 error: null, 
-                product: {
-                    id: action.payload.id,
-                    title: action.payload.title, 
-                    price: action.payload.price,
-                    qty: action.payload.qty,
-                    qtyLimit: action.payload.qtyLimit
-                } 
+                product: action.payload
             }
         case ProductActionTypes.SET_CURRENT_PAGE:
             return {

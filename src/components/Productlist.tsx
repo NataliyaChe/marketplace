@@ -4,12 +4,10 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useNavigate } from 'react-router-dom'
 
-function Productlist() {
-    const {products, loading, error, currentPage, firstProduct, lastProduct,  shoppingCart} = useTypedSelector(state => state.product)
-    const {fetchProducts} = useActions(ProductActionCreators)
+function ProductList() {
+    const {products, loading, error, currentPage, firstProduct, lastProduct} = useTypedSelector(state => state.product)
+    const {fetchProducts, setModal, addProduct} = useActions(ProductActionCreators)
     let navigate = useNavigate()
-    const {setModal} = useActions(ProductActionCreators)
-    const {addProduct} = useActions(ProductActionCreators)
 
     useEffect(() => {
         fetchProducts(currentPage)
@@ -56,4 +54,4 @@ function Productlist() {
     )
 }
 
-export default Productlist
+export default ProductList

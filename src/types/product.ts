@@ -21,7 +21,7 @@ export interface ISingleProduct {
 
 export enum ProductActionTypes {
     FETCH_START = 'FETCH_START',
-    FETCH_PRODUCTLIST = 'FETCH_PRODUCTLIST',
+    FETCH_PRODUCT_LIST = 'FETCH_PRODUCT_LIST',
     FETCH_ERROR = 'FETCH_ERROR',
     FETCH_CURRENT_PRODUCT = 'FETCH_CURRENT_PRODUCT',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
@@ -38,8 +38,8 @@ interface FetchAction {
 }
 
 interface FetchProductsAction {
-    type: ProductActionTypes.FETCH_PRODUCTLIST;
-    payload: any[];
+    type: ProductActionTypes.FETCH_PRODUCT_LIST;
+    payload: ISingleProduct[];
 }
 
 interface FetchErrorAction {

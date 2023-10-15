@@ -7,18 +7,15 @@ import { useParams } from 'react-router-dom'
 function SingleProduct() {
     const params = useParams();
     const productId = Number(params.id);
-    const {fetchCurrentProduct} = useActions(ProductActionCreators)
-    const {product, shoppingCart, products} = useTypedSelector(state => state.product)
-    const {setModal} = useActions(ProductActionCreators)
-    const {addProduct} = useActions(ProductActionCreators)
-    const {fetchProducts} = useActions(ProductActionCreators)
+    const {product} = useTypedSelector(state => state.product)
+    const {fetchCurrentProduct, setModal, addProduct, fetchProducts} = useActions(ProductActionCreators)
 
     useEffect(() => {
         fetchCurrentProduct(productId)
         fetchProducts()
     }, [])
     
-    function addToCart(event: React.MouseEvent<HTMLButtonElement>) {
+    function addToCart() {
         addProduct(productId)
         setModal()   
     }

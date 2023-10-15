@@ -9,18 +9,15 @@ interface IProductProps {
 
 function ShoppingCartItem ({product}: IProductProps) {
     let {id, title, price, qty, qtyLimit} = product
-    const {addProduct} = useActions(ProductActionCreators)
-    const {reduceQty} = useActions(ProductActionCreators)
-    const {changeQty} = useActions(ProductActionCreators)
-    const {removeProduct} = useActions(ProductActionCreators)
+    const {addProduct, changeQty, reduceQty, removeProduct} = useActions(ProductActionCreators)
     const [amount, setAmount] = useState(`${qty}`)
     const [warning, setWarning] = useState(false)
 
-    function deleteProduct(event: React.MouseEvent<HTMLButtonElement>) {
+    function deleteProduct() {
         removeProduct(id)   
     }
 
-    function increaseAmount(event: React.MouseEvent<HTMLButtonElement>) { 
+    function increaseAmount() { 
         addProduct(id)
         if(qty < qtyLimit) {
             setAmount(`${++qty}`)
@@ -31,7 +28,7 @@ function ShoppingCartItem ({product}: IProductProps) {
         }
     }
 
-    function reduceAmount(event: React.MouseEvent<HTMLButtonElement>) {
+    function reduceAmount() {
         if(qty > 1) {
             reduceQty(id)
             setAmount(`${--qty}`)

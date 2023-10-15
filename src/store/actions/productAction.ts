@@ -7,7 +7,7 @@ export const fetchProducts = (currentPage: number): any => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
             const response = await axios.get(`http://localhost:3004/items?limit=4&page=${currentPage}`)
-            dispatch({type: ProductActionTypes.FETCH_PRODUCTLIST, payload: response.data})
+            dispatch({type: ProductActionTypes.FETCH_PRODUCT_LIST, payload: response.data})
         } catch (e) {
             dispatch({
                 type: ProductActionTypes.FETCH_ERROR,
