@@ -3,6 +3,7 @@ import { useTypedSelector } from "../hooks/useTypedSelector"
 import { useActions } from "../hooks/useActions"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useParams } from 'react-router-dom'
+import Button from "./Button"
 
 function SingleProduct() {
     const params = useParams();
@@ -23,9 +24,9 @@ function SingleProduct() {
     return (
         <div className="container">
             <h2>{product.title}</h2>
-            <button data-id={product.id} className="button" onClick={addToCart}>
+            <Button onClick={addToCart} dataId={product.id}>
                 Add to cart
-            </button>
+            </Button> 
         </div>
     )
 }

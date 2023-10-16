@@ -2,6 +2,7 @@ import { ISingleProduct } from "../types/product"
 import { useActions } from "../hooks/useActions"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useState } from "react"
+import Button from "./Button"
 
 interface IProductProps {
     product: ISingleProduct,
@@ -63,13 +64,14 @@ function ShoppingCartItem ({product}: IProductProps) {
                     <p className="text">Price: {price}</p>
                     <p className="text">x</p>
                     <div className="flex-wrap amount-container">
-                        <button className="button" data-id={id}
-                            onClick={reduceAmount}>
-                                -
-                        </button>
+                        <Button onClick={reduceAmount} dataId={id}>
+                            -
+                        </Button>   
                     
                         <input type="text" className="qty-input"  value={amount || undefined} data-id={id} onChange={changeAmount}/>
-                        <button className="button"  data-id={id} onClick={increaseAmount}>+</button>
+                        <Button onClick={increaseAmount} dataId={id}>
+                            +
+                        </Button>  
                         
                     </div>
                     <div className="flex-wrap info-container">
@@ -85,9 +87,9 @@ function ShoppingCartItem ({product}: IProductProps) {
                         }
                     </div>
                 </div>
-                <button className="button" data-id={id} onClick={deleteProduct}>
+                <Button onClick={deleteProduct} dataId={id}>
                     Delete
-                </button>
+                </Button> 
             </div>
         </div>
     )

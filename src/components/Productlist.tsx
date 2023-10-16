@@ -45,15 +45,12 @@ function ProductList() {
                 <div key={targetProduct.id} data-id={targetProduct.id}  className="item">
                     <p>{targetProduct.title}</p>
                     <div className="flex-wrap">
-                        <button data-id={targetProduct.id} className="button" onClick={getProduct}>
+                        <Button onClick={getProduct} dataId={targetProduct.id}>
                             More
-                        </button>
-                        <button data-id={targetProduct.id} className="button" onClick={addToCart}>
+                        </Button>
+                        <Button onClick={addToCart} dataId={targetProduct.id}>
                             Add to cart
-                        </button>
-                        {/* <Button onClick={getProduct} data-id={targetProduct.id}>More</Button>
-                        <Button onClick={addToCart} data-id={targetProduct.id}>Add to cart</Button>
-                             */}
+                        </Button>            
                     </div>
                     
                 </div>
