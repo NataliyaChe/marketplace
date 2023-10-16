@@ -7,7 +7,11 @@ function ShoppingCartModal() {
     const {setModal} = useActions(ProductActionCreators)
     const {shoppingCart} = useTypedSelector(state => state.product)
 
-    const totalCost = shoppingCart.reduce((sum, {qty, price}) => sum + ((qty % 2 === 0 ? qty * (price / 100 * 90) : qty * price)), 0)
+    const totalCost = shoppingCart.reduce((sum, {qty, price}) => {
+        const isDiscount = qty % 2 === 0 
+        const discountPrice = price / 100 * 90
+        return sum + ((isDiscount ? qty * discountPrice : qty * price))
+    }, 0)
     
 
     return (

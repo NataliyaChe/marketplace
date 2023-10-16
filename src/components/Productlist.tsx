@@ -19,7 +19,9 @@ function ProductList() {
     
 
     function getProduct(event: React.BaseSyntheticEvent) { 
-        const productId = event.target.dataset.id
+        const productId = Number(event.target.dataset.id)
+        console.log('productId', productId);
+        
         navigate(`/${productId}`)
     }
    
@@ -49,12 +51,9 @@ function ProductList() {
                         <button data-id={targetProduct.id} className="button" onClick={addToCart}>
                             Add to cart
                         </button>
-                        {/* <Button onClick={getProduct} className={'button'} data-id={targetProduct.id}>
-                            More
-                        </Button>
-                        <Button onClick={addToCart} className={'button'} data-id={targetProduct.id}>
-                            Add to cart
-                        </Button> */}
+                        {/* <Button onClick={getProduct} data-id={targetProduct.id}>More</Button>
+                        <Button onClick={addToCart} data-id={targetProduct.id}>Add to cart</Button>
+                             */}
                     </div>
                     
                 </div>

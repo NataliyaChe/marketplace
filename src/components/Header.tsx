@@ -3,7 +3,6 @@ import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import Badge from './Badge';
-import Button from "./Button";
 
 function Header () {
     const {setModal} = useActions(ProductActionCreators)
@@ -18,7 +17,7 @@ function Header () {
             {cartLength > 0 && 
                 <Badge />
             }       
-            <Button onClick={setModal} className={'button cart-button'}>Cart</Button>
+            <button onClick={setModal} className='button cart-button'>Cart</button>
         </div>
     )
 }
