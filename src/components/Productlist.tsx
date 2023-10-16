@@ -3,6 +3,7 @@ import { useActions } from "../hooks/useActions"
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useNavigate } from 'react-router-dom'
+import Button from "./Button"
 
 function ProductList() {
     const {products, loading, error, currentPage, firstProduct, lastProduct} = useTypedSelector(state => state.product)
@@ -14,6 +15,8 @@ function ProductList() {
     }, [currentPage])
 
     const paginatedProducts = (products.slice(firstProduct, lastProduct));
+    console.log('paginatedProducts', paginatedProducts[1]);
+    
 
     function getProduct(event: React.BaseSyntheticEvent) { 
         const productId = event.target.dataset.id
@@ -46,6 +49,12 @@ function ProductList() {
                         <button data-id={targetProduct.id} className="button" onClick={addToCart}>
                             Add to cart
                         </button>
+                        {/* <Button onClick={getProduct} className={'button'} data-id={targetProduct.id}>
+                            More
+                        </Button>
+                        <Button onClick={addToCart} className={'button'} data-id={targetProduct.id}>
+                            Add to cart
+                        </Button> */}
                     </div>
                     
                 </div>

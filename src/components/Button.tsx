@@ -1,9 +1,15 @@
 export interface IButtonProps {
-    title: string,
+    children: string,
+    onClick:  (e: React.MouseEvent) => void,
+    className: string,
+    dataId?: number
 }
 
-function Button({title}: IButtonProps) {
-    <button className="button cart-button">{title}</button>
+function Button({children, onClick, className, dataId }: IButtonProps) {
+
+    return(
+        <button onClick={onClick} className={className} data-id={dataId}>{children}</button>
+    )
 }
 
 export default Button
