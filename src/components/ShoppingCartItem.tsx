@@ -8,9 +8,9 @@ interface IProductProps {
 }
 
 function ShoppingCartItem ({product}: IProductProps) {
-    let {id, title, price, qty, qtyLimit} = product
+    const {id, title, price, qty, qtyLimit} = product
     const {addProduct, changeQty, reduceQty, removeProduct} = useActions(ProductActionCreators)
-    const [amount, setAmount] = useState(`${qty}`)
+    const [amount, setAmount] = useState(qty)
     const [warning, setWarning] = useState(false)
 
     function deleteProduct() {
@@ -20,7 +20,7 @@ function ShoppingCartItem ({product}: IProductProps) {
     function increaseAmount() { 
         addProduct(id)
         if(qty < qtyLimit) {
-            setAmount(`${++qty}`)
+            setAmount(qty + 1)
         }
         if(qty === qtyLimit) {
             setWarning(true) 
@@ -31,25 +31,25 @@ function ShoppingCartItem ({product}: IProductProps) {
     function reduceAmount() {
         if(qty > 1) {
             reduceQty(id)
-            setAmount(`${--qty}`)
+            setAmount(qty - 1)
         } else {
             removeProduct(id)  
         }
     }
 
     function changeAmount(event: React.BaseSyntheticEvent) {
-        setAmount('')
+        setAmount(0)
         const newQty = Number(event.target.value)
         if(newQty <= qtyLimit && newQty > 0) {
             changeQty(id, newQty)
-            setAmount(`${newQty}`)
+            setAmount(newQty)
             if(newQty === qtyLimit) {
                 setWarning(true) 
                 setTimeout(() => setWarning(false), 5000);
             }
         } else if (newQty > qtyLimit) {
             changeQty(id, qtyLimit)
-            setAmount(`${qtyLimit}`)
+            setAmount(qtyLimit)
             setWarning(true) 
             setTimeout(() => setWarning(false), 5000);
         } 
