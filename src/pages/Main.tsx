@@ -1,4 +1,4 @@
-import ProductList from "../components/Productlist"
+import ProductList from "../components/ProductList"
 import Pagination from "../components/Pagination"
 
 function Main() {
