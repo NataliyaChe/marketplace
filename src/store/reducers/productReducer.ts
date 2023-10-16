@@ -34,9 +34,7 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
         case ProductActionTypes.SET_CURRENT_PAGE:
             return {
                 ...state,
-                currentPage: action.payload.currentPage,
-                firstProduct: action.payload.firstProduct,
-                lastProduct: action.payload.lastProduct,
+                ...action.payload
             }
         case ProductActionTypes.SET_MODAL:
             return {
@@ -54,23 +52,20 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                                 ...product,
                                 qty: ++product.qty
                             }  
-                        } else {
-                            return product  
-                        }
+                        } 
+                        return product
                     })
                 } 
-            } else {
-                currentProduct = state.products.find(product => product.id === action.payload) 
-                if(currentProduct) {
-                    return {
-                        ...state,
-                        shoppingCart: state.shoppingCart.concat({...currentProduct, qty: 1})
-                    } 
-                } else {
-                    return {
-                        ...state
-                    }
-                }
+            } 
+            currentProduct = state.products.find(product => product.id === action.payload) 
+            if(currentProduct) {
+                return {
+                    ...state,
+                    shoppingCart: [...state.shoppingCart, {...currentProduct, qty: 1}]
+                } 
+            } 
+            return {
+                ...state
             }
         case ProductActionTypes.REDUCE_QTY:  
             return {
