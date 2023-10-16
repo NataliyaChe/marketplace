@@ -17,7 +17,7 @@ export const fetchProducts = (currentPage: number): any => {
     }
 }
 
-export const fetchCurrentProduct = (productId: number | undefined): any => {
+export const fetchCurrentProduct = (productId: number): any => {
     return async (dispatch: Dispatch<ProductAction>) => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
