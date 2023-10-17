@@ -1,6 +1,6 @@
 import { ProductActionTypes, ProductAction } from "../../types/product";
 import { initialState } from "./initialState";
-import { IProductState } from "../../types/product"
+import { IProductState, ISingleProduct } from "../../types/product"
 
 export const productReducer = (state = initialState, action: ProductAction): IProductState => {
     switch(action.type) {
@@ -42,7 +42,7 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                 modal: !state.modal
             }
         case ProductActionTypes.ADD_PRODUCT:
-            let currentProduct = state.shoppingCart.find(product => product.id === action.payload)
+            const currentProduct = state.shoppingCart.find(product => product.id === action.payload)
             if(currentProduct) {
                 return {
                     ...state,
@@ -57,16 +57,11 @@ export const productReducer = (state = initialState, action: ProductAction): IPr
                     })
                 } 
             } 
-            currentProduct = state.products.find(product => product.id === action.payload) 
-            if(currentProduct) {
-                return {
-                    ...state,
-                    shoppingCart: [...state.shoppingCart, {...currentProduct, qty: 1}]
-                } 
-            } 
+            const product = state.products.find(product => product.id === action.payload) as ISingleProduct 
             return {
-                ...state
-            }
+                ...state,
+                shoppingCart: [...state.shoppingCart, {...product, qty: 1}]
+            } 
         case ProductActionTypes.REDUCE_QTY:  
             return {
                 ...state,
