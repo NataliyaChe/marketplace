@@ -1,7 +1,4 @@
-import { useDispatch } from "react-redux"
-import { bindActionCreators } from 'redux'
+import { useDispatch } from 'react-redux'
+import type {  AppDispatch } from '../store'
 
-export const useActions = (creator: any) => {
-    const dispatch = useDispatch()
-    return bindActionCreators(creator, dispatch)
-}
+export const useAppDispatch: () => AppDispatch = useDispatch

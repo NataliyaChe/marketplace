@@ -5,19 +5,23 @@ import * as ProductActionCreators from '../store/actions/productAction'
 import Badge from './Badge';
 
 function Header () {
-    const {setModal} = useActions(ProductActionCreators)
-    const {shoppingCart} = useTypedSelector(state => state.product)
-    const cartLength = shoppingCart.length
+    // const {setModal} = useActions(ProductActionCreators)
+    // const {shoppingCart} = useTypedSelector(state => state.product)
+    // const cartLength = shoppingCart.length
 
     return (
         <div className="header">
             <Link to='.' className='title'>
                 Marketplace
             </Link>
-            {cartLength > 0 && 
+            {/* {cartLength > 0 &&  */}
                 <Badge />
-            }       
-            <button onClick={setModal} className='button cart-button'>Cart</button>
+            {/* }        */}
+            <button 
+                // onClick={setModal}  
+                className='button cart-button'>
+                    Cart
+            </button>
         </div>
     )
 }
