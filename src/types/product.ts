@@ -9,7 +9,6 @@ export interface IProductState {
     lastProduct: number;
     modal: boolean;
     shoppingCart:  ISingleProduct[],
-    totalCost: number,
 }
 
 export interface ISingleProduct {
@@ -22,12 +21,16 @@ export interface ISingleProduct {
 
 export enum ProductActionTypes {
     FETCH_START = 'FETCH_START',
-    FETCH_PRODUCTLIST = 'FETCH_PRODUCTLIST',
+    FETCH_PRODUCT_LIST = 'FETCH_PRODUCT_LIST',
     FETCH_ERROR = 'FETCH_ERROR',
     FETCH_CURRENT_PRODUCT = 'FETCH_CURRENT_PRODUCT',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_MODAL = 'SET_MODAL',
-    UPDATE_SHOPPING_CART = 'UPDATE_SHOPPING_CART',
+    ADD_PRODUCT = 'ADD_PRODUCT',
+    INCREASE_QTY = 'INCREASE_QTY',
+    REDUCE_QTY = 'REDUCE_QTY',
+    REMOVE_PRODUCT = 'REMOVE_PRODUCT',
+    CHANGE_QTY = 'CHANGE_QTY'
 }
 
 interface FetchAction {
@@ -35,8 +38,8 @@ interface FetchAction {
 }
 
 interface FetchProductsAction {
-    type: ProductActionTypes.FETCH_PRODUCTLIST;
-    payload: any[];
+    type: ProductActionTypes.FETCH_PRODUCT_LIST;
+    payload: ISingleProduct[];
 }
 
 interface FetchErrorAction {
@@ -63,12 +66,32 @@ interface SetModalAction {
     payload: boolean;
 }
 
-interface UpdateShoppingCartAction {
-    type: ProductActionTypes.UPDATE_SHOPPING_CART;
+interface AddProductAction {
+    type: ProductActionTypes.ADD_PRODUCT;
+    payload: number
+}
+
+interface IncreaseQtyAction {
+    type: ProductActionTypes.INCREASE_QTY;
+    payload: number | null
+}
+
+interface ReduceQtyAction {
+    type: ProductActionTypes.REDUCE_QTY;
+    payload: number | null
+}
+
+interface RemoveProductAction {
+    type: ProductActionTypes.REMOVE_PRODUCT;
+    payload: number
+}
+
+interface ChangeQtyAction {
+    type: ProductActionTypes.CHANGE_QTY;
     payload: {
-        shoppingCart: ISingleProduct[];
-        totalCost: number
+        id: number;
+        newQty: number;
     }
 }
 
-export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | FetchCurrentProductAction | SetCurrentPageAction | SetModalAction | UpdateShoppingCartAction 
+export type ProductAction = FetchAction | FetchProductsAction | FetchErrorAction | FetchCurrentProductAction | SetCurrentPageAction | SetModalAction | AddProductAction | IncreaseQtyAction | ReduceQtyAction | RemoveProductAction | ChangeQtyAction

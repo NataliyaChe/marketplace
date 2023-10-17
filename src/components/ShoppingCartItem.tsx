@@ -1,90 +1,57 @@
 import { ISingleProduct } from "../types/product"
 import { useActions } from "../hooks/useActions"
-import { useTypedSelector } from "../hooks/useTypedSelector"
 import * as ProductActionCreators from '../store/actions/productAction'
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import Button from "./Button"
 
 interface IProductProps {
     product: ISingleProduct,
 }
 
 function ShoppingCartItem ({product}: IProductProps) {
-    let {id, title, price, qty, qtyLimit} = product
-    const {shoppingCart} = useTypedSelector(state => state.product)
-    const {updateShoppingCart} = useActions(ProductActionCreators)
-    const [amount, setAmount] = useState(`${qty}`)
+    const {id, title, price, qty, qtyLimit} = product
+    const {addProduct, changeQty, reduceQty, removeProduct} = useActions(ProductActionCreators)
+    const [amount, setAmount] = useState(qty)
     const [warning, setWarning] = useState(false)
 
-    function deleteProduct(event: React.MouseEvent<HTMLButtonElement>) {
-        const newProduct = {
-            ...product,
-            qty: 0,
-        }
-        setAmount(`${newProduct.qty}`)
-        updateShoppingCart(newProduct, shoppingCart)    
+    function deleteProduct() {
+        removeProduct(id)   
     }
 
-    function reduceAmount(event: React.MouseEvent<HTMLButtonElement>) {
-        const newProduct = {
-            ...product,
-            qty: --qty,
+    useEffect(() => {
+        if (qty >= qtyLimit) {
+            setWarning(true) 
+            setTimeout(() => setWarning(false), 5000)
         }
-        setAmount(`${qty}`)
-        updateShoppingCart(newProduct, shoppingCart)   
-    }
+    }, [qty])
 
-    function increaseAmount(event: React.MouseEvent<HTMLButtonElement>) { 
+    function increaseAmount() { 
+        addProduct(id)
         if(qty < qtyLimit) {
-            const newProduct = {
-                ...product,
-                qty: ++qty,
-            }  
-            if(qty === qtyLimit) {
-                setWarning(true) 
-                setTimeout(() => setWarning(false), 5000);
-            }
-            setAmount(`${newProduct.qty}`)
-            updateShoppingCart(newProduct, shoppingCart)
+            setAmount(qty + 1)
+        }
+    }
+
+    function reduceAmount() {
+        if(qty > 1) {
+            reduceQty(id)
+            setAmount(qty - 1)
+        } else {
+            removeProduct(id)  
         }
     }
 
     function changeAmount(event: React.BaseSyntheticEvent) {
+        setAmount(0)
         const newQty = Number(event.target.value)
-        setAmount(event.target.value)
-        if(newQty < qtyLimit && newQty > 0) {
-            const newProduct = {
-                ...product,
-                qty: newQty
-            } 
-            updateShoppingCart(newProduct, shoppingCart) 
-        } else if (newQty === qtyLimit) {
-            setAmount(`${newQty}`)
-            setWarning(true) 
-            setTimeout(() => setWarning(false), 5000);
-        } else if(newQty > qtyLimit) {
-            setAmount(`${qty}`)
-            setWarning(true) 
-            setTimeout(() => setWarning(false), 5000);
-        }
-        
+        if(newQty <= qtyLimit && newQty > 0) {
+            changeQty(id, newQty)
+            setAmount(newQty)
+        } else if (newQty > qtyLimit) {
+            changeQty(id, qtyLimit)
+            setAmount(qtyLimit)
+        } 
     }
-    
-    // function changeAmount(event: React.BaseSyntheticEvent) {
-    //     const newQty = Number(event.target.value)
-    //     if(newQty < qtyLimit) {
-    //         setAmount(`${newQty}`)
-    //         const newProduct = {
-    //             ...product,
-    //             qty: newQty
-    //         }
-    //         updateShoppingCart(newProduct, shoppingCart) 
-    //     } else {
-    //         setAmount(`${qty}`)
-    //         setWarning(true) 
-    //         setTimeout(() => setWarning(false), 5000);
-    //     }
-        
-    // }
 
     return (
         <div key={id} className="item-container">
@@ -94,13 +61,14 @@ function ShoppingCartItem ({product}: IProductProps) {
                     <p className="text">Price: {price}</p>
                     <p className="text">x</p>
                     <div className="flex-wrap amount-container">
-                        <button className="button" data-id={id}
-                            onClick={reduceAmount}>
-                                -
-                        </button>
+                        <Button onClick={reduceAmount} dataId={id}>
+                            -
+                        </Button>   
                     
-                        <input type="text" className="qty-input"  value={amount} data-id={id} onChange={changeAmount}/>
-                        <button className="button"  data-id={id} onClick={increaseAmount}>+</button>
+                        <input type="text" className="qty-input"  value={amount || undefined} data-id={id} onChange={changeAmount}/>
+                        <Button onClick={increaseAmount} dataId={id}>
+                            +
+                        </Button>  
                         
                     </div>
                     <div className="flex-wrap info-container">
@@ -116,9 +84,9 @@ function ShoppingCartItem ({product}: IProductProps) {
                         }
                     </div>
                 </div>
-                <button className="button" data-id={id} onClick={deleteProduct}>
+                <Button onClick={deleteProduct} dataId={id}>
                     Delete
-                </button>
+                </Button> 
             </div>
         </div>
     )

@@ -7,7 +7,7 @@ export const fetchProducts = (currentPage: number): any => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
             const response = await axios.get(`http://localhost:3004/items?limit=4&page=${currentPage}`)
-            dispatch({type: ProductActionTypes.FETCH_PRODUCTLIST, payload: response.data})
+            dispatch({type: ProductActionTypes.FETCH_PRODUCT_LIST, payload: response.data})
         } catch (e) {
             dispatch({
                 type: ProductActionTypes.FETCH_ERROR,
@@ -17,22 +17,15 @@ export const fetchProducts = (currentPage: number): any => {
     }
 }
 
-export const fetchCurrentProduct = (productId: number | undefined): any => {
+export const fetchCurrentProduct = (productId: number): any => {
     return async (dispatch: Dispatch<ProductAction>) => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
             const response = await axios.get(`http://localhost:3004/items?id=${productId}`)
-            const data = response.data
-            const singleProduct = {
-                id: data[0].id,
-                title: data[0].title,
-                price: data[0].price,
-                qty: data[0].qty,
-                qtyLimit: data[0].qtyLimit
-            }          
+            const [data] = response.data       
             dispatch({
                 type: ProductActionTypes.FETCH_CURRENT_PRODUCT, 
-                payload: singleProduct
+                payload: data
             })  
         } catch (e) {
             dispatch({
@@ -47,9 +40,9 @@ export const setCurrentPage = (currentPage: number, firstProduct: number, lastPr
     return {
         type: ProductActionTypes.SET_CURRENT_PAGE,
         payload: {
-            currentPage: currentPage,
-            firstProduct: firstProduct,
-            lastProduct: lastProduct
+            currentPage,
+            firstProduct,
+            lastProduct
         }
     }
 }
@@ -60,32 +53,34 @@ export const setModal = () => {
     }
 }
 
-export const updateShoppingCart = (product: ISingleProduct, shoppingCart: ISingleProduct[]): any => {
-    let currentProduct = shoppingCart.find(currentProduct => currentProduct.id === product.id)
-    if(currentProduct) {
-        const newQty = product.qty
-        if( newQty === 0) {
-            shoppingCart.forEach((item, index) => {
-                if(item.id === currentProduct?.id){
-                    shoppingCart.splice(index, 1)  
-                }
-            })
-        } else {
-            currentProduct.qty = newQty 
-        } 
-    } else if (!currentProduct) {
-        currentProduct = {...product, qty: 1}
-        shoppingCart.push(currentProduct)
-    }
-
-    const newTotalCost = shoppingCart.reduce((sum, {qty, price}) => sum + (qty % 2 === 0 ? qty * (price / 100 * 90) : qty * price), 0)
-
+export const addProduct = (productId: number) => {
     return {
-        type: ProductActionTypes.UPDATE_SHOPPING_CART,
-        payload: {
-            shoppingCart: shoppingCart,
-            totalCost: newTotalCost
-        }
-    }   
+        type: ProductActionTypes.ADD_PRODUCT,
+        payload: productId
+    }
 }
 
+export const reduceQty = (productId: number) => {
+    return {
+        type: ProductActionTypes.REDUCE_QTY,
+        payload: productId
+    }
+}
+
+export const removeProduct = (productId: number) => {
+    return {
+        type: ProductActionTypes.REMOVE_PRODUCT,
+        payload: productId
+    }
+}
+
+export const changeQty = (productId: number, newQty: number) => {
+    
+    return {
+        type: ProductActionTypes.CHANGE_QTY,
+        payload: {
+            id: productId,
+            newQty: newQty
+        }
+    }
+}
