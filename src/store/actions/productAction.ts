@@ -40,9 +40,9 @@ export const setCurrentPage = (currentPage: number, firstProduct: number, lastPr
     return {
         type: ProductActionTypes.SET_CURRENT_PAGE,
         payload: {
-            currentPage: currentPage,
-            firstProduct: firstProduct,
-            lastProduct: lastProduct
+            currentPage,
+            firstProduct,
+            lastProduct
         }
     }
 }
