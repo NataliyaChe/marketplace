@@ -2,12 +2,10 @@ import { useActions } from "../hooks/useActions"
 import * as ProductActionCreators from '../store/actions/productAction'
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import ShoppingCartItem from "./ShoppingCartItem"
-import { useState } from "react"
 
 function ShoppingCartModal() {
     const {setModal} = useActions(ProductActionCreators)
     const {shoppingCart} = useTypedSelector(state => state.product)
-    const [warning, setWarning] = useState(false)
 
     const totalCost = shoppingCart.reduce((sum, {qty, price}) => {
         const isDiscount = qty % 2 === 0 
