@@ -1,7 +1,7 @@
 import { ISingleProduct } from "../types/product"
 import { useActions } from "../hooks/useActions"
 import * as ProductActionCreators from '../store/actions/productAction'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Button from "./Button"
 
 interface IProductProps {
@@ -18,14 +18,17 @@ function ShoppingCartItem ({product}: IProductProps) {
         removeProduct(id)   
     }
 
+    useEffect(() => {
+        if (qty >= qtyLimit) {
+            setWarning(true) 
+            setTimeout(() => setWarning(false), 5000)
+        }
+    }, [qty])
+
     function increaseAmount() { 
         addProduct(id)
         if(qty < qtyLimit) {
             setAmount(qty + 1)
-        }
-        if(qty === qtyLimit) {
-            setWarning(true) 
-            setTimeout(() => setWarning(false), 5000);
         }
     }
 
@@ -44,15 +47,9 @@ function ShoppingCartItem ({product}: IProductProps) {
         if(newQty <= qtyLimit && newQty > 0) {
             changeQty(id, newQty)
             setAmount(newQty)
-            if(newQty === qtyLimit) {
-                setWarning(true) 
-                setTimeout(() => setWarning(false), 5000);
-            }
         } else if (newQty > qtyLimit) {
             changeQty(id, qtyLimit)
             setAmount(qtyLimit)
-            setWarning(true) 
-            setTimeout(() => setWarning(false), 5000);
         } 
     }
 

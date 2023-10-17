@@ -15,13 +15,10 @@ function ProductList() {
     }, [currentPage])
 
     const paginatedProducts = (products.slice(firstProduct, lastProduct));
-    console.log('paginatedProducts', paginatedProducts[1]);
-    
 
     function getProduct(event: React.BaseSyntheticEvent) { 
         const productId = Number(event.target.dataset.id)
         console.log('productId', productId);
-        
         navigate(`/${productId}`)
     }
    
