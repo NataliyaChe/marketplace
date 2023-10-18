@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import Button from "./Button"
 import { useAppDispatch } from "../hooks/useActions"
 import { useAppSelector } from "../hooks/useTypedSelector"
-import { fetchProducts } from "../store/features/productSlice"
+import { fetchProducts, setModal } from "../store/features/productSlice"
 
 function ProductList() {
     let navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const {products, loading, error} = useAppSelector(state => state.product)
+    const {products, loading, error, currentPage, firstProduct, lastProduct} = useAppSelector(state => state.product)
 
     useEffect(() => {
-        dispatch(fetchProducts())
-    }, [dispatch])
+        dispatch(fetchProducts(currentPage))
+    }, [currentPage])
 
-    // const paginatedProducts = (products.slice(firstProduct, lastProduct));
+    const paginatedProducts = (products.slice(firstProduct, lastProduct));
 
     function getProduct(event: React.BaseSyntheticEvent) { 
         const productId = Number(event.target.dataset.id)
@@ -24,9 +24,8 @@ function ProductList() {
     function addToCart(event: React.BaseSyntheticEvent) {
         const productId = Number(event.target.dataset.id)
         console.log('addToCart');
-        
         // addProduct(productId)
-        // setModal()            
+        dispatch(setModal())           
     }
 
     if(loading) {
@@ -39,7 +38,7 @@ function ProductList() {
 
     return (
         <div className="itemlist">
-            {products.map(targetProduct =>
+            {paginatedProducts.map(targetProduct =>
                 <div key={targetProduct.id} data-id={targetProduct.id}  className="item">
                     <p>{targetProduct.title}</p>
                     <div className="flex-wrap">

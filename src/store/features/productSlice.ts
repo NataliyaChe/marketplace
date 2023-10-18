@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk, AnyAction, current } from '@reduxjs/toolkit'
 import type { RootState } from '../index'
 
 export interface IProductState {
@@ -41,10 +41,10 @@ export const initialState: IProductState = {
     shoppingCart: [],
 }
 
-export const fetchProducts = createAsyncThunk<ISingleProduct[], undefined, { rejectValue: string }>(
+export const fetchProducts = createAsyncThunk<ISingleProduct[], number, { rejectValue: string }>(
     'products/fetchProducts', 
-    async function(_, {rejectWithValue}) {
-        const response = await fetch('http://localhost:3004/items')
+    async function(currentPage, {rejectWithValue}) {
+        const response = await fetch(`http://localhost:3004/items?limit=4&page=${currentPage}`)
 
         if(!response.ok) {
             return rejectWithValue('Error!')
@@ -59,13 +59,9 @@ export const fetchCurrentProduct = createAsyncThunk<ISingleProduct, number, { re
     async function (productId, {rejectWithValue}) {
         const response = await fetch(`http://localhost:3004/items?id=${productId}`)
         const [product] = await response.json()
-
         if(!response.ok) {
             return rejectWithValue('Error!')
         }
-
-        console.log('data', product);
-        
         return product
     }
 )
@@ -74,8 +70,18 @@ export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        setCurrentPage: (state) => {},
-        setModal: (state, action: PayloadAction<boolean>) => {},
+        setCurrentPage: (state, action: PayloadAction<{
+            currentPage: number, 
+            firstProduct: number, 
+            lastProduct: number
+        }>) => {
+            state.currentPage = action.payload.currentPage;
+            state.firstProduct = action.payload.firstProduct;
+            state.lastProduct = action.payload.lastProduct
+        },
+        setModal: (state) => {
+            state.modal = !state.modal
+        },
         addProduct: (state, action: PayloadAction<number>) => {},
         increaseQty: (state, action: PayloadAction<number | null>) => {},
         reduceQty: (state, action: PayloadAction<number | null>) => {},

@@ -3,9 +3,10 @@ import Main from "./pages/Main";
 import {BrowserRouter,  Routes, Route } from 'react-router-dom';
 import SingleProduct from "./components/SingleProduct";
 import ShoppingCartModal from "./components/ShoppingCartModal";
+import { useAppSelector } from "./hooks/useTypedSelector"
 
 function App() {
-  // const {modal} = useTypedSelector(state => state.product)
+  const {modal} = useAppSelector(state => state.product)
 
   return (
     <BrowserRouter>
@@ -15,7 +16,7 @@ function App() {
           <Route path='/' element={<Main />} />
           <Route path='/:id' element={<SingleProduct />} />
         </Routes>
-        {/* {modal && <ShoppingCartModal />} */}
+        {modal && <ShoppingCartModal />}
       </div>
     </BrowserRouter>
   );

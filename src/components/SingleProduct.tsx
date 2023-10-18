@@ -3,7 +3,7 @@ import { useAppDispatch } from "../hooks/useActions"
 import { useAppSelector } from "../hooks/useTypedSelector"
 import { useParams } from 'react-router-dom'
 import Button from "./Button"
-import { fetchProducts, fetchCurrentProduct } from "../store/features/productSlice"
+import { fetchProducts, fetchCurrentProduct, setModal } from "../store/features/productSlice"
 
 function SingleProduct() {
     const dispatch = useAppDispatch()
@@ -13,12 +13,12 @@ function SingleProduct() {
     
     useEffect(() => {
         dispatch(fetchCurrentProduct(productId))
-        dispatch(fetchProducts())
+        // dispatch(fetchProducts(currentPage))
     }, [])
     
     function addToCart() {
         // addProduct(productId)
-        // setModal()   
+        dispatch(setModal())       
     }
     
     return (

@@ -4,15 +4,15 @@ import { useAppSelector } from "../hooks/useTypedSelector"
 import { setCurrentPage } from "../store/features/productSlice"
 
 function Pagination() {
-  const {products, loading, error, productsPerPage} = useAppSelector(state => state.product)
+  const {products, productsPerPage} = useAppSelector(state => state.product)
   const dispatch = useAppDispatch()
-    // const {setCurrentPage} = useActions(ProductActionCreators)
+
   const totalPages = Math.ceil(products.length / productsPerPage)
   const changePage = (event: any) => { 
       const currentPage = event.selected+1
       const firstProduct = event.selected * productsPerPage
       const lastProduct = firstProduct + productsPerPage
-      // dispatch(setCurrentPage({currentPage, firstProduct, lastProduct}))
+      dispatch(setCurrentPage({currentPage, firstProduct, lastProduct}))   
   }
 
     return (

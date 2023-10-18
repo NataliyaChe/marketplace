@@ -1,10 +1,14 @@
-// import { useActions } from "../hooks/useActions"
-// import * as ProductActionCreators from '../store/actions/productAction'
-// import { useTypedSelector } from "../hooks/useTypedSelector"
+import { useAppDispatch } from "../hooks/useActions"
+import { useAppSelector } from "../hooks/useTypedSelector"
+import { fetchProducts, fetchCurrentProduct, setModal } from "../store/features/productSlice"
 import ShoppingCartItem from "./ShoppingCartItem"
 
 function ShoppingCartModal() {
-    // const {setModal} = useActions(ProductActionCreators)
+    const dispatch = useAppDispatch()
+
+    function closeModal() {
+        dispatch(setModal())
+    }
     // const {shoppingCart} = useTypedSelector(state => state.product)
 
     // const totalCost = shoppingCart.reduce((sum, {qty, price}) => {
@@ -15,7 +19,7 @@ function ShoppingCartModal() {
     
     return (
         <>
-            <div className="backdrop" />
+            <div className="backdrop" onClick={closeModal}/>
             <div className="modal">
                 <div className="container cart-wrap">
                     <h2 className="cart-title">Shopping cart:</h2>
