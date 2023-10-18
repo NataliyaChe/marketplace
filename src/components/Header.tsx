@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useActions } from "../hooks/useActions"
-import { useTypedSelector } from "../hooks/useTypedSelector"
-import * as ProductActionCreators from '../store/actions/productAction'
+
 import Badge from './Badge';
 
 function Header () {

@@ -1,7 +1,6 @@
 import { useEffect } from "react"
-// import { useTypedSelector } from "../hooks/useTypedSelector"
-// import { useActions } from "../hooks/useActions"
-// import * as ProductActionCreators from '../store/actions/productAction'
+import { useAppDispatch } from "../hooks/useActions"
+import { useAppSelector } from "../hooks/useTypedSelector"
 import { useParams } from 'react-router-dom'
 import Button from "./Button"
 
@@ -23,8 +22,8 @@ function SingleProduct() {
     
     return (
         <div className="container">
-            {/* <h2>{product.title}</h2>
-            <Button onClick={addToCart} dataId={product.id}>
+            <h2>{productId}</h2>
+            {/* <Button onClick={addToCart} dataId={product.id}>
                 Add to cart
             </Button>  */}
         </div>
