@@ -1,31 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction, current } from '@reduxjs/toolkit'
 import type { RootState } from '../index'
-
-export interface IProductState {
-    products: ISingleProduct[];
-    product: ISingleProduct;
-    loading: boolean;
-    error: null | string;
-    productsPerPage: number;
-    currentPage: number;
-    firstProduct: number;
-    lastProduct: number;
-    modal: boolean;
-    shoppingCart:  ISingleProduct[],
-}
-
-export interface ISingleProduct {
-    id: null | number,
-    title: string,
-    price: number,
-    qty: number,
-    qtyLimit: number
-}
+import { IProductState, ISingleProduct } from '../../types/product'
 
 export const initialState: IProductState = {
     products: [],
     product: {
-        id: null,
+        id: 0,
         title: '',
         price: 0,
         qty: 0,
@@ -82,9 +62,22 @@ export const productSlice = createSlice({
         setModal: (state) => {
             state.modal = !state.modal
         },
-        addProduct: (state, action: PayloadAction<number>) => {},
-        increaseQty: (state, action: PayloadAction<number | null>) => {},
-        reduceQty: (state, action: PayloadAction<number | null>) => {},
+        addProduct: (state, action: PayloadAction<number>) => {
+            const currentProduct = state.shoppingCart.find(product => product.id === action.payload) as ISingleProduct 
+            if(currentProduct) {
+                    if(currentProduct.id === action.payload && currentProduct.qty < currentProduct.qtyLimit) {
+                        currentProduct.qty = ++currentProduct.qty 
+                    } 
+            } else {
+                const newProduct = state.products.find(product => product.id === action.payload) as ISingleProduct 
+            if(newProduct) {
+                state.shoppingCart.push({...newProduct, qty: 1})
+            }
+            }
+        },
+        reduceQty: (state, action: PayloadAction<number | null>) => {
+            
+        },
         removeProduct: (state, action: PayloadAction<number>) => {},
         changeQty: (state, action: PayloadAction<number>) => {},
     },
@@ -123,7 +116,6 @@ export const {
     setCurrentPage, 
     setModal, 
     addProduct, 
-    increaseQty,
     reduceQty, 
     removeProduct, 
     changeQty 

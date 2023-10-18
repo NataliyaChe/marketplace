@@ -3,7 +3,7 @@ import { useAppDispatch } from "../hooks/useActions"
 import { useAppSelector } from "../hooks/useTypedSelector"
 import { useParams } from 'react-router-dom'
 import Button from "./Button"
-import { fetchProducts, fetchCurrentProduct, setModal } from "../store/features/productSlice"
+import { addProduct, fetchCurrentProduct, setModal } from "../store/features/productSlice"
 
 function SingleProduct() {
     const dispatch = useAppDispatch()
@@ -17,8 +17,9 @@ function SingleProduct() {
     }, [])
     
     function addToCart() {
-        // addProduct(productId)
-        dispatch(setModal())       
+        dispatch(addProduct(productId))
+        dispatch(setModal()) 
+        console.log('addToCart', product);      
     }
     
     return (
