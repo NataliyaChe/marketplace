@@ -82,8 +82,16 @@ export const productSlice = createSlice({
         removeProduct: (state, action: PayloadAction<number>) => {
             state.shoppingCart = state.shoppingCart.filter(product => product.id !== action.payload)
         },
-        changeQty: (state, action: PayloadAction<number>) => {
-
+        changeQty: (state, action: PayloadAction<{
+            id: number, 
+            newQty: number,
+        }>) => {
+            const currentProduct = state.shoppingCart.find(product => product.id === action.payload.id) as ISingleProduct
+            if(action.payload.id <= currentProduct.qtyLimit && action.payload.id > 0) {
+                currentProduct.qty = action.payload.id
+            } else if(action.payload.id > currentProduct.qtyLimit) {
+                currentProduct.qty = currentProduct.qtyLimit
+            }
         },
     },
     extraReducers: (builder) => {

@@ -17,8 +17,7 @@ function SingleProduct() {
     
     function addToCart() {
         dispatch(addProduct(productId))
-        dispatch(setModal()) 
-        console.log('addToCart', product);      
+        dispatch(setModal())     
     }
     
     return (

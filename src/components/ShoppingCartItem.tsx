@@ -38,8 +38,16 @@ function ShoppingCartItem ({product}: IProductProps) {
         }
     }
 
-    function changeAmount() {
-        
+    function changeAmount(event: React.BaseSyntheticEvent) {
+        setAmount(0)
+        const newQty = Number(event.target.value)
+        dispatch(changeQty({id, newQty}))
+        if(newQty <= qtyLimit && newQty > 0) {
+            setAmount(newQty)
+        } else if (newQty > qtyLimit) {
+            // dispatch(changeQty({id, qtyLimit}))
+            setAmount(qtyLimit)
+        } 
     }
 
     function deleteProduct() {
