@@ -13,7 +13,6 @@ function SingleProduct() {
     
     useEffect(() => {
         dispatch(fetchCurrentProduct(productId))
-        // dispatch(fetchProducts(currentPage))
     }, [])
     
     function addToCart() {

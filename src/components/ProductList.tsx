@@ -24,8 +24,7 @@ function ProductList() {
     function addToCart(event: React.BaseSyntheticEvent) {
         const productId = Number(event.target.dataset.id)
         dispatch(addProduct(productId))
-        dispatch(setModal())    
-        console.log('addToCart', product, shoppingCart);       
+        dispatch(setModal())          
     }
 
     if(loading) {

@@ -14,7 +14,6 @@ function ShoppingCartItem ({product}: IProductProps) {
     const [amount, setAmount] = useState(qty)
     const [warning, setWarning] = useState(false)
     const dispatch = useAppDispatch()
-    console.log('product', id);
     
     useEffect(() => {
         if (qty >= qtyLimit) {
@@ -31,7 +30,12 @@ function ShoppingCartItem ({product}: IProductProps) {
     }
 
     function reduceAmount() {
-        
+        if(qty > 1) {
+            dispatch(reduceQty(id))  
+            setAmount(qty - 1)
+        } else {
+            dispatch(removeProduct(id))  
+        }
     }
 
     function changeAmount() {
@@ -39,7 +43,7 @@ function ShoppingCartItem ({product}: IProductProps) {
     }
 
     function deleteProduct() {
-        
+        dispatch(removeProduct(id))  
     }
 
     return (
