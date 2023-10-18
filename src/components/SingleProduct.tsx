@@ -3,29 +3,30 @@ import { useAppDispatch } from "../hooks/useActions"
 import { useAppSelector } from "../hooks/useTypedSelector"
 import { useParams } from 'react-router-dom'
 import Button from "./Button"
+import { fetchProducts, fetchCurrentProduct } from "../store/features/productSlice"
 
 function SingleProduct() {
+    const dispatch = useAppDispatch()
     const params = useParams();
     const productId = Number(params.id);
-    // const {product} = useTypedSelector(state => state.product)
-    // const {fetchCurrentProduct, setModal, addProduct, fetchProducts} = useActions(ProductActionCreators)
-
-    // useEffect(() => {
-    //     fetchCurrentProduct(productId)
-    //     fetchProducts()
-    // }, [])
+    const {product} = useAppSelector(state => state.product)
     
-    // function addToCart() {
-    //     addProduct(productId)
-    //     setModal()   
-    // }
+    useEffect(() => {
+        dispatch(fetchCurrentProduct(productId))
+        dispatch(fetchProducts())
+    }, [])
+    
+    function addToCart() {
+        // addProduct(productId)
+        // setModal()   
+    }
     
     return (
         <div className="container">
-            <h2>{productId}</h2>
-            {/* <Button onClick={addToCart} dataId={product.id}>
+            <h2>{product.title}</h2>
+            <Button onClick={addToCart} dataId={product.id}>
                 Add to cart
-            </Button>  */}
+            </Button> 
         </div>
     )
 }

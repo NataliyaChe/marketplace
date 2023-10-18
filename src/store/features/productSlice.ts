@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit'
 import type { RootState } from '../index'
 
 export interface IProductState {
@@ -41,24 +41,40 @@ export const initialState: IProductState = {
     shoppingCart: [],
 }
 
-export const fetchProducts = createAsyncThunk<ISingleProduct[], undefined, { rejectValue: string }>('products/fetchProducts', 
-    async function() {
+export const fetchProducts = createAsyncThunk<ISingleProduct[], undefined, { rejectValue: string }>(
+    'products/fetchProducts', 
+    async function(_, {rejectWithValue}) {
         const response = await fetch('http://localhost:3004/items')
+
+        if(!response.ok) {
+            return rejectWithValue('Error!')
+        }
+
         const data = await response.json()
-        console.log('data', data);
-        
         return data
     })
+
+export const fetchCurrentProduct = createAsyncThunk<ISingleProduct, number, { rejectValue: string }>(
+    'products/fetchCurrentProduct', 
+    async function (productId, {rejectWithValue}) {
+        const response = await fetch(`http://localhost:3004/items?id=${productId}`)
+        const [product] = await response.json()
+
+        if(!response.ok) {
+            return rejectWithValue('Error!')
+        }
+
+        console.log('data', product);
+        
+        return product
+    }
+)
 
 export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        // fetchStart: (state) => {},
-        // fetchError: (state, action: PayloadAction<string>) => {},
-        // fetchProducts: (state, action: PayloadAction<ISingleProduct[]>) => {},
-        fetchCurrentProduct: (state, action: PayloadAction<ISingleProduct>) => {},
-        setCurrentPage: () => {},
+        setCurrentPage: (state) => {},
         setModal: (state, action: PayloadAction<boolean>) => {},
         addProduct: (state, action: PayloadAction<number>) => {},
         increaseQty: (state, action: PayloadAction<number | null>) => {},
@@ -77,15 +93,27 @@ export const productSlice = createSlice({
                 state.products = action.payload;
                 state.error = null;
             })
-            .addCase(fetchProducts.rejected, (state) => {
+            .addCase(fetchCurrentProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchCurrentProduct.fulfilled, (state, action) => {
                 state.loading = false;
-                state.error = 'Fetch error'
+                state.product = action.payload;
+                state.error = null;
+            })
+            .addMatcher(isError, (state, action: PayloadAction<string>) => {
+                state.loading = false;
+                state.error = action.payload
             })
     }
 })
 
+function isError(action: AnyAction) {
+    return action.type.endsWith('rejected')
+}
+
 export const { 
-    fetchCurrentProduct, 
     setCurrentPage, 
     setModal, 
     addProduct, 

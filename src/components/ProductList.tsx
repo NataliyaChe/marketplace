@@ -9,7 +9,6 @@ function ProductList() {
     let navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {products, loading, error} = useAppSelector(state => state.product)
-    console.log('product', products);
 
     useEffect(() => {
         dispatch(fetchProducts())
@@ -20,7 +19,6 @@ function ProductList() {
     function getProduct(event: React.BaseSyntheticEvent) { 
         const productId = Number(event.target.dataset.id)
         navigate(`/${productId}`)
-        
     }
    
     function addToCart(event: React.BaseSyntheticEvent) {
