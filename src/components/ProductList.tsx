@@ -18,7 +18,6 @@ function ProductList() {
 
     function getProduct(event: React.BaseSyntheticEvent) { 
         const productId = Number(event.target.dataset.id)
-        console.log('productId', productId);
         navigate(`/${productId}`)
     }
    

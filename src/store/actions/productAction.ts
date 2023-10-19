@@ -6,7 +6,7 @@ export const fetchProducts = (currentPage: number): any => {
     return async (dispatch: Dispatch<ProductAction>) => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
-            const response = await axios.get(`http://localhost:3004/items?limit=4&page=${currentPage}`)
+            const response = await axios.get(`http://localhost:3004/products?limit=4&page=${currentPage}`)
             dispatch({type: ProductActionTypes.FETCH_PRODUCT_LIST, payload: response.data})
         } catch (e) {
             dispatch({
@@ -21,7 +21,7 @@ export const fetchCurrentProduct = (productId: number): any => {
     return async (dispatch: Dispatch<ProductAction>) => {
         try {
             dispatch({type: ProductActionTypes.FETCH_START})
-            const response = await axios.get(`http://localhost:3004/items?id=${productId}`)
+            const response = await axios.get(`http://localhost:3004/products?id=${productId}`)
             const [data] = response.data       
             dispatch({
                 type: ProductActionTypes.FETCH_CURRENT_PRODUCT, 

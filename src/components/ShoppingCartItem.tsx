@@ -64,8 +64,12 @@ function ShoppingCartItem ({product}: IProductProps) {
                         <Button onClick={reduceAmount} dataId={id}>
                             -
                         </Button>   
-                    
-                        <input type="text" className="qty-input"  value={amount || undefined} data-id={id} onChange={changeAmount}/>
+                        <input 
+                            type="text" 
+                            className="qty-input"  
+                            value={amount || undefined} 
+                            data-id={id} 
+                            onChange={changeAmount}/>
                         <Button onClick={increaseAmount} dataId={id}>
                             +
                         </Button>  

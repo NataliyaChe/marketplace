@@ -17,7 +17,9 @@ function Header () {
             {cartLength > 0 && 
                 <Badge />
             }       
-            <button onClick={setModal} className='button cart-button'>Cart</button>
+            <button onClick={setModal} className='button cart-button'>
+                Cart
+            </button>
         </div>
     )
 }
