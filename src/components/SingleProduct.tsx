@@ -3,16 +3,17 @@ import { useAppDispatch } from "../hooks/useActions"
 import { useAppSelector } from "../hooks/useTypedSelector"
 import { useParams } from 'react-router-dom'
 import Button from "./Button"
-import { addProduct, fetchCurrentProduct, setModal } from "../store/features/productSlice"
+import { addProduct, fetchCurrentProduct, setModal, fetchProducts } from "../store/features/productSlice"
 
 function SingleProduct() {
     const dispatch = useAppDispatch()
     const params = useParams();
     const productId = Number(params.id);
-    const {product} = useAppSelector(state => state.product)
+    const {product, currentPage} = useAppSelector(state => state.product)
     
     useEffect(() => {
         dispatch(fetchCurrentProduct(productId))
+        dispatch(fetchProducts(currentPage))
     }, [])
     
     function addToCart() {

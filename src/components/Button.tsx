@@ -1,7 +1,7 @@
 export interface IButtonProps {
     onClick:  (e: React.MouseEvent) => void,
     children: string,
-    dataId: number | null,
+    dataId: number,
 }
 
 function Button({ onClick, children, dataId }: IButtonProps) {

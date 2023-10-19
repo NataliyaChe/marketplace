@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk, AnyAction, current } from '@reduxjs/toolkit'
-import type { RootState } from '../index'
+import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit'
 import { IProductState, ISingleProduct } from '../../types/product'
 
 export const initialState: IProductState = {
@@ -24,7 +23,7 @@ export const initialState: IProductState = {
 export const fetchProducts = createAsyncThunk<ISingleProduct[], number, { rejectValue: string }>(
     'products/fetchProducts', 
     async function(currentPage, {rejectWithValue}) {
-        const response = await fetch(`http://localhost:3004/items?limit=4&page=${currentPage}`)
+        const response = await fetch(`http://localhost:3004/products?limit=4&page=${currentPage}`)
 
         if(!response.ok) {
             return rejectWithValue('Error!')
@@ -37,11 +36,13 @@ export const fetchProducts = createAsyncThunk<ISingleProduct[], number, { reject
 export const fetchCurrentProduct = createAsyncThunk<ISingleProduct, number, { rejectValue: string }>(
     'products/fetchCurrentProduct', 
     async function (productId, {rejectWithValue}) {
-        const response = await fetch(`http://localhost:3004/items?id=${productId}`)
-        const [product] = await response.json()
+        const response = await fetch(`http://localhost:3004/products?id=${productId}`)
+
         if(!response.ok) {
             return rejectWithValue('Error!')
         }
+
+        const [product] = await response.json()
         return product
     }
 )
@@ -65,14 +66,12 @@ export const productSlice = createSlice({
         addProduct: (state, action: PayloadAction<number>) => {
             const currentProduct = state.shoppingCart.find(product => product.id === action.payload)
             if(currentProduct) {
-                    if(currentProduct.id === action.payload && currentProduct.qty < currentProduct.qtyLimit) {
-                        currentProduct.qty = ++currentProduct.qty 
-                    } 
+                if(currentProduct.id === action.payload && currentProduct.qty < currentProduct.qtyLimit) {
+                    currentProduct.qty = ++currentProduct.qty 
+                } 
             } else {
-                const newProduct = state.products.find(product => product.id === action.payload) 
-            if(newProduct) {
+                const newProduct = state.products.find(product => product.id === action.payload) as ISingleProduct
                 state.shoppingCart.push({...newProduct, qty: 1})
-            }
             }
         },
         reduceQty: (state, action: PayloadAction<number | null>) => {
@@ -87,9 +86,9 @@ export const productSlice = createSlice({
             newQty: number,
         }>) => {
             const currentProduct = state.shoppingCart.find(product => product.id === action.payload.id) as ISingleProduct
-            if(action.payload.id <= currentProduct.qtyLimit && action.payload.id > 0) {
-                currentProduct.qty = action.payload.id
-            } else if(action.payload.id > currentProduct.qtyLimit) {
+            if(action.payload.newQty <= currentProduct.qtyLimit && action.payload.newQty > 0) {
+                currentProduct.qty = action.payload.newQty
+            } else if(action.payload.newQty > currentProduct.qtyLimit) {
                 currentProduct.qty = currentProduct.qtyLimit
             }
         },

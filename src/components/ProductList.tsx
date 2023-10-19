@@ -8,7 +8,7 @@ import { fetchProducts, setModal, addProduct } from "../store/features/productSl
 function ProductList() {
     let navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const {products, loading, error, currentPage, firstProduct, lastProduct, product, shoppingCart} = useAppSelector(state => state.product)
+    const {products, loading, error, currentPage, firstProduct, lastProduct} = useAppSelector(state => state.product)
 
     useEffect(() => {
         dispatch(fetchProducts(currentPage))

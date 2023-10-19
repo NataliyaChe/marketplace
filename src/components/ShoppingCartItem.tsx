@@ -1,6 +1,5 @@
 import { ISingleProduct } from "../types/product"
 import { useAppDispatch } from "../hooks/useActions"
-import { useAppSelector } from "../hooks/useTypedSelector"
 import { useState, useEffect } from "react"
 import Button from "./Button"
 import { addProduct, changeQty, reduceQty, removeProduct } from "../store/features/productSlice"
@@ -45,7 +44,6 @@ function ShoppingCartItem ({product}: IProductProps) {
         if(newQty <= qtyLimit && newQty > 0) {
             setAmount(newQty)
         } else if (newQty > qtyLimit) {
-            // dispatch(changeQty({id, qtyLimit}))
             setAmount(qtyLimit)
         } 
     }
@@ -65,7 +63,12 @@ function ShoppingCartItem ({product}: IProductProps) {
                         <Button onClick={reduceAmount} dataId={id}>
                             -
                         </Button>   
-                        <input type="text" className="qty-input"  value={amount || undefined} data-id={id} onChange={changeAmount}/>
+                        <input 
+                            type="text" 
+                            className="qty-input"  
+                            value={amount || ''} 
+                            data-id={id} 
+                            onChange={changeAmount}/>
                         <Button onClick={increaseAmount} dataId={id}>
                             +
                         </Button>  

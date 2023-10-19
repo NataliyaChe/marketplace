@@ -135,8 +135,6 @@ code {
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  /* max-height: 800px; */
-  /* overflow-y: auto; */
 }
 
 .modal-title {
@@ -180,10 +178,6 @@ code {
 
 .hide {
   display: none
-}
-
-.text {
-  
 }
 
 .price-container {
