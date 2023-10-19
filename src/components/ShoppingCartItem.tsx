@@ -60,7 +60,7 @@ function ShoppingCartItem ({product}: IProductProps) {
                     <p className="text">Price: {price}</p>
                     <p className="text">x</p>
                     <div className="flex-wrap amount-container">
-                        <Button onClick={reduceAmount} dataId={id}>
+                        <Button onClick={reduceAmount}>
                             -
                         </Button>   
                         <input 
@@ -69,7 +69,7 @@ function ShoppingCartItem ({product}: IProductProps) {
                             value={amount || ''} 
                             data-id={id} 
                             onChange={changeAmount}/>
-                        <Button onClick={increaseAmount} dataId={id}>
+                        <Button onClick={increaseAmount}>
                             +
                         </Button>  
                         
@@ -87,7 +87,7 @@ function ShoppingCartItem ({product}: IProductProps) {
                         }
                     </div>
                 </div>
-                <Button onClick={deleteProduct} dataId={id}>
+                <Button onClick={deleteProduct}>
                     Delete
                 </Button> 
             </div>
